@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+:root {
+  --color-orange-50: #FFF3E0;
+  --color-orange-100: #FFE0B2;
+  --color-orange-500: #F57C00;
+  --color-orange-600: #E65100;
+  --color-orange-700: #BF360C;
+
+  --color-emerald-50: #E8F5E9;
+  --color-emerald-100: #C8E6C9;
+  --color-emerald-600: #15B062;
+  --color-emerald-700: #0B6B3A;
+  --color-emerald-800: #08522C;
+  --color-emerald-900: #053D20;
+  --color-emerald-950: #032413;
+
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbars for carousels while keeping touch scrolling active */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F5F9;
+}
+::-webkit-scrollbar-thumb {
+  background: #0B6B3A;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F57C00;
+}
+
+/* Luxury Badges & Buttons */
+.badge-orange {
+  background: #FFF3E0;
+  color: #E65100;
+  border: 1px solid rgba(245, 124, 0, 0.2);
+}
+
+.badge-green {
+  background: #E8F5E9;
+  color: #0B6B3A;
+  border: 1px solid rgba(11, 107, 58, 0.2);
+}
+
+.badge-glass {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.85rem 1.8rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 9999px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+}
+
+.btn-orange {
+  background: linear-gradient(135deg, #F57C00 0%, #E65100 100%);
+  color: #ffffff;
+  box-shadow: 0 12px 30px -10px rgba(245, 124, 0, 0.4);
+}
+
+.btn-orange:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px -8px rgba(245, 124, 0, 0.55);
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+}
+
+.btn-green {
+  background: linear-gradient(135deg, #0B6B3A 0%, #053D20 100%);
+  color: #ffffff;
+  box-shadow: 0 12px 30px -10px rgba(11, 107, 58, 0.35);
+}
+
+.btn-green:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 35px -8px rgba(11, 107, 58, 0.5);
+}
+
+.btn-outline-white {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.btn-outline-white:hover {
+  background: #ffffff;
+  color: #0F172A;
+  border-color: #ffffff;
+  transform: translateY(-3px);
+}
+
+.glass-card-dark {
+  background: rgba(7, 23, 16, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+}
+
+.section-padding {
+  padding: 3rem 0;
+}
+
+@media (min-width: 992px) {
+  .section-padding {
+    padding: 4rem 0;
+  }
+}
+
+.section-title-wrap {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto 2rem;
+}
+
+.section-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.75rem;
+  font-weight: 800;
+  margin-top: 0.25rem;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2.25rem;
+  }
+}
+
+.section-subtitle {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.gradient-text-orange {
+  background: linear-gradient(135deg, #F57C00 0%, #FF9800 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-text-green {
+  background: linear-gradient(135deg, #0B6B3A 0%, #15B062 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
