@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Car, Plane, ShieldCheck, Star, ChevronRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { Calendar, Clock, MapPin, Car, Plane, ShieldCheck, Star, ChevronRight, CheckCircle2, Sparkles, Navigation, Zap } from 'lucide-react';
 
 const Hero = ({ onOpenBookingModal }) => {
-  const [activeTab, setActiveTab] = useState('hourly'); // 'hourly' | 'outstation' | 'airport'
+  const [activeTab, setActiveTab] = useState('hourly');
 
-  // Form states
   const [hourlyForm, setHourlyForm] = useState({
     pickup: 'Visakhapatnam Railway Station',
     date: new Date().toISOString().split('T')[0],
@@ -22,7 +21,7 @@ const Hero = ({ onOpenBookingModal }) => {
   });
 
   const [airportForm, setAirportForm] = useState({
-    type: 'drop', // 'pickup' | 'drop'
+    type: 'drop',
     airport: 'Visakhapatnam Intl Airport (VTZ)',
     location: 'Rushikonda Beach Resort',
     flightNo: '6E-452',
@@ -43,127 +42,130 @@ const Hero = ({ onOpenBookingModal }) => {
     onOpenBookingModal('form', bookingData);
   };
 
+  const setPresetPickup = (loc) => {
+    if (activeTab === 'hourly') setHourlyForm({ ...hourlyForm, pickup: loc });
+    if (activeTab === 'outstation') setOutstationForm({ ...outstationForm, pickup: loc });
+    if (activeTab === 'airport') setAirportForm({ ...airportForm, location: loc });
+  };
+
   return (
-    <section id="home" className="relative min-h-screen flex items-center pt-28 pb-16 lg:py-36 overflow-hidden bg-slate-950">
-      {/* Background Image with Dark Overlay */}
-      <div className="absolute inset-0 z-0">
-        <img
-          src="/hero-bg.png"
-          alt="Vizag Coastal Highway Sunrise"
-          className="w-full h-full object-cover object-center scale-105 transform animate-pulse duration-[10000ms]"
-        />
-        {/* Gradients overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-slate-950/90 via-slate-950/75 to-slate-950/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-black/50" />
-      </div>
+    <section id="home" className="relative min-h-[92vh] flex items-center pt-28 pb-16 lg:py-32 overflow-hidden bg-gradient-to-b from-sky-50/70 via-amber-50/30 to-slate-50 border-b border-slate-200">
+      
+      {/* Background Soft Coastal Glows */}
+      <div className="absolute top-10 left-1/4 w-[500px] h-[500px] bg-amber-200/40 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-sky-200/50 rounded-full blur-[160px] pointer-events-none" />
+
+      {/* Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e120_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e120_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
-          {/* Left Column: Headlines & Brand Statement */}
-          <div className="lg:col-span-7 space-y-6 text-white text-center lg:text-left">
+          {/* Left Column: Brand Statement */}
+          <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
-            {/* Top Tagline Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-orange-400 font-semibold text-xs md:text-sm shadow-xl">
-              <Sparkles className="w-4 h-4 text-orange-400 animate-spin" />
-              <span>Visakhapatnam's #1 Rated Luxury Cab Service</span>
-              <div className="flex items-center gap-0.5 ml-2 border-l border-white/20 pl-2 text-amber-400">
-                <Star className="w-3.5 h-3.5 fill-amber-400" />
-                <span className="text-white text-xs font-bold">4.9 / 5</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-amber-200 text-amber-700 font-bold text-xs shadow-sm">
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span className="tracking-wide">Visakhapatnam's Premier #1 Taxi & Chauffeur Fleet</span>
+              <div className="flex items-center gap-1 ml-2 border-l border-slate-200 pl-2.5 text-amber-600 font-extrabold">
+                <Star className="w-3.5 h-3.5 fill-amber-400 text-amber-400" />
+                <span className="text-slate-800 text-xs">4.9 / 5 (3,200+ Reviews)</span>
               </div>
             </div>
 
-            {/* Main Heading */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-extrabold tracking-tight leading-none">
-              <span className="block text-white">VIZAG TAXI</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-emerald-400 mt-2">
-                Premium Taxi Services Across Vizag
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black tracking-tight leading-[1.08] font-heading text-slate-900">
+              VIZAG <span className="gradient-text-gold">TAXI</span>
+              <span className="block text-2xl sm:text-3xl md:text-4xl font-extrabold mt-3 text-slate-700">
+                Coastal Highway & Araku Sightseeing Cabs
               </span>
             </h1>
 
-            {/* Subheading Badges */}
-            <p className="text-slate-300 text-lg md:text-xl font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
-              Experience seamless coastal highway rides, airport pickups, Araku hill tours, and outstation trips in top-maintained AC vehicles with professional verified chauffeurs.
+            <p className="text-slate-600 text-base md:text-lg font-normal max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              Experience hassle-free city rides, airport drops, and Araku valley hill station tours with <span className="text-amber-700 font-bold">verified local chauffeurs</span> and transparent fixed fares. No surge fees, guaranteed on-time pickup.
             </p>
 
-            {/* Feature Pills */}
-            <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5 pt-2">
-              {['Airport Transfers', 'Local Trips', 'Outstation Cabs', 'Corporate Travel', 'Hourly Rentals'].map((item) => (
-                <div
-                  key={item}
-                  className="px-3.5 py-1.5 rounded-lg bg-emerald-950/60 border border-emerald-500/30 text-emerald-300 text-xs font-bold flex items-center gap-1.5 backdrop-blur-sm"
-                >
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                  <span>{item}</span>
-                </div>
-              ))}
+            {/* Quick Location Pills */}
+            <div className="space-y-2 pt-1">
+              <div className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center justify-center lg:justify-start gap-1.5">
+                <Navigation className="w-3.5 h-3.5 text-sky-600" />
+                <span>Popular Pickup Spots:</span>
+              </div>
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
+                {['RK Beach', 'Rushikonda', 'VTZ Airport', 'Vizag Station', 'Madhurawada', 'Araku Valley'].map((item) => (
+                  <button
+                    key={item}
+                    type="button"
+                    onClick={() => setPresetPickup(item)}
+                    className="px-3 py-1.5 rounded-xl bg-white hover:bg-amber-50 text-slate-700 hover:text-amber-700 text-xs font-bold border border-slate-200 hover:border-amber-300 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                  >
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>{item}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            {/* CTA Action Buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+            {/* CTAs */}
+            <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-3">
               <button
                 onClick={() => onOpenBookingModal('general')}
-                className="btn btn-orange text-base px-8 py-4 w-full sm:w-auto shadow-2xl hover:scale-105"
+                className="btn-gold text-sm px-8 py-4 w-full sm:w-auto flex items-center justify-center gap-2 cursor-pointer shadow-lg"
               >
-                <span>Book Taxi Now</span>
-                <ChevronRight className="w-5 h-5" />
+                <Zap className="w-4 h-4 text-white fill-white" />
+                <span>Book Instant Cab Now</span>
+                <ChevronRight className="w-4 h-4" />
               </button>
 
               <a
-                href="#packages"
-                className="btn btn-outline-white text-base px-8 py-4 w-full sm:w-auto"
+                href="#simulator"
+                className="px-8 py-4 text-sm font-bold text-slate-800 rounded-full bg-white border border-slate-300 hover:border-sky-500 hover:text-sky-600 transition-all text-center shadow-xs"
               >
-                <span>Explore Tour Packages</span>
+                <span>Live Route Simulator</span>
               </a>
             </div>
 
-            {/* Trust Badges Bar */}
-            <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-300 text-xs font-semibold">
+            {/* Guarantees */}
+            <div className="pt-4 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-slate-600 text-xs font-semibold border-t border-slate-200">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                <span>100% Verified Chauffeurs</span>
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>Zero Driver Cancellation</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-orange-400" />
-                <span>24/7 On-Time Pickup Guaranteed</span>
+                <Clock className="w-4 h-4 text-amber-600" />
+                <span>24/7 Live GPS Track</span>
               </div>
               <div className="flex items-center gap-2">
-                <Car className="w-4 h-4 text-amber-400" />
-                <span>Sanitized & Clean Fleet</span>
+                <Car className="w-4 h-4 text-sky-600" />
+                <span>100% Sanitized AC Fleet</span>
               </div>
             </div>
 
           </div>
 
-          {/* Right Column: Premium Interactive Floating Booking Card */}
+          {/* Right Column: Light Glass Reservation Card */}
           <div className="lg:col-span-5">
-            <div className="glass-card-dark p-6 md:p-8 shadow-2xl relative border border-white/20 overflow-hidden transform lg:hover:-translate-y-1 transition-transform duration-500">
+            <div className="glass-panel-glow-light p-6 md:p-8 relative overflow-hidden">
               
-              {/* Card Accent Lights */}
-              <div className="absolute -top-16 -right-16 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute -bottom-16 -left-16 w-32 h-32 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
                 <div>
-                  <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                    <span>Quick Cab Reservation</span>
-                  </h3>
-                  <p className="text-xs text-slate-400 mt-0.5">Instant booking confirmation in 60 seconds</p>
+                  <h3 className="text-xl font-bold text-slate-900 font-heading">Quick Cab Reservation</h3>
+                  <p className="text-xs text-slate-500">Instant SMS & WhatsApp confirmation</p>
                 </div>
-                <span className="px-2.5 py-1 rounded bg-orange-500/20 text-orange-400 text-xs font-bold border border-orange-500/30">
-                  Best Rates
+                <span className="px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-black border border-amber-200">
+                  FIXED FARES
                 </span>
               </div>
 
               {/* 3 Form Tabs */}
-              <div className="grid grid-cols-3 gap-1 bg-slate-900/80 p-1 rounded-2xl border border-white/10 mb-6">
+              <div className="grid grid-cols-3 gap-1 bg-slate-100 p-1.5 rounded-2xl border border-slate-200 mb-6">
                 <button
                   type="button"
                   onClick={() => setActiveTab('hourly')}
-                  className={`py-2.5 px-2 text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'hourly'
-                      ? 'bg-gradient-to-r from-orange-500 to-orange-600 text-white shadow-lg'
-                      : 'text-slate-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-white text-amber-700 font-black shadow-sm border border-slate-200'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   <Clock className="w-3.5 h-3.5" />
@@ -173,10 +175,10 @@ const Hero = ({ onOpenBookingModal }) => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('outstation')}
-                  className={`py-2.5 px-2 text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'outstation'
-                      ? 'bg-gradient-to-r from-emerald-600 to-emerald-700 text-white shadow-lg'
-                      : 'text-slate-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-white text-sky-700 font-black shadow-sm border border-slate-200'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   <Car className="w-3.5 h-3.5" />
@@ -186,10 +188,10 @@ const Hero = ({ onOpenBookingModal }) => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('airport')}
-                  className={`py-2.5 px-2 text-xs font-bold rounded-xl transition-all flex flex-col sm:flex-row items-center justify-center gap-1.5 ${
+                  className={`py-2 px-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'airport'
-                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg'
-                      : 'text-slate-400 hover:text-white hover:bg-white/5'
+                      ? 'bg-white text-emerald-700 font-black shadow-sm border border-slate-200'
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   <Plane className="w-3.5 h-3.5" />
@@ -197,12 +199,12 @@ const Hero = ({ onOpenBookingModal }) => {
                 </button>
               </div>
 
-              {/* TAB 1: HOURLY RENTALS FORM */}
+              {/* TAB 1: HOURLY RENTALS */}
               {activeTab === 'hourly' && (
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center gap-1.5">
-                      <MapPin className="w-3.5 h-3.5 text-orange-400" />
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center gap-1.5">
+                      <MapPin className="w-3.5 h-3.5 text-amber-600" />
                       <span>Pickup Location in Vizag</span>
                     </label>
                     <input
@@ -211,184 +213,130 @@ const Hero = ({ onOpenBookingModal }) => {
                       value={hourlyForm.pickup}
                       onChange={(e) => setHourlyForm({ ...hourlyForm, pickup: e.target.value })}
                       placeholder="e.g. RK Beach, Siripuram, Gajuwaka..."
-                      className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500 transition-colors"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-medium"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-emerald-400" />
-                        <span>Pickup Date</span>
-                      </label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Pickup Date</label>
                       <input
                         type="date"
                         required
                         value={hourlyForm.date}
                         onChange={(e) => setHourlyForm({ ...hourlyForm, date: e.target.value })}
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-amber-400" />
-                        <span>Pickup Time</span>
-                      </label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Pickup Time</label>
                       <input
                         type="time"
                         required
                         value={hourlyForm.time}
                         onChange={(e) => setHourlyForm({ ...hourlyForm, time: e.target.value })}
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs md:text-sm text-white focus:outline-none focus:border-amber-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5 flex items-center gap-1.5">
-                      <Car className="w-3.5 h-3.5 text-orange-400" />
-                      <span>Vehicle Type</span>
-                    </label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">Vehicle Choice</label>
                     <select
                       value={hourlyForm.vehicle}
                       onChange={(e) => setHourlyForm({ ...hourlyForm, vehicle: e.target.value })}
-                      className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-orange-500"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
                     >
-                      <option value="Swift Dzire (4+1)">Swift Dzire / Etios (Sedan)</option>
-                      <option value="Maruti Ertiga (6+1)">Maruti Ertiga (SUV 6 Seater)</option>
+                      <option value="Swift Dzire (4+1)">Swift Dzire / Etios (Sedan - AC)</option>
+                      <option value="Maruti Ertiga (6+1)">Maruti Ertiga (SUV 6 Seater - AC)</option>
                       <option value="Toyota Innova Crysta">Toyota Innova Crysta (Luxury 7 Seater)</option>
-                      <option value="Tempo Traveller (12+1)">Tempo Traveller (12 Seater Mini Bus)</option>
+                      <option value="Tempo Traveller (12+1)">Tempo Traveller (12 Seater Luxury)</option>
                     </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5">
-                      Rental Package Duration
-                    </label>
-                    <div className="grid grid-cols-4 gap-1.5">
-                      {['4 Hours', '6 Hours', '8 Hours', '10 Hours'].map((pkg) => (
-                        <button
-                          key={pkg}
-                          type="button"
-                          onClick={() => setHourlyForm({ ...hourlyForm, package: pkg })}
-                          className={`py-2 text-xs font-bold rounded-lg border transition-all ${
-                            hourlyForm.package.includes(pkg)
-                              ? 'bg-orange-500 text-white border-orange-400'
-                              : 'bg-slate-900/60 text-slate-300 border-white/10 hover:border-white/30'
-                          }`}
-                        >
-                          {pkg}
-                        </button>
-                      ))}
-                    </div>
                   </div>
 
                   <button
                     type="submit"
-                    className="btn btn-orange w-full py-3.5 text-sm font-bold shadow-lg hover:shadow-orange-500/40 mt-2"
+                    className="btn-gold w-full py-3.5 text-xs font-black shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Book Hourly Rental Now</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>Reserve Hourly Cab</span>
+                    <ChevronRight className="w-4 h-4 text-white" />
                   </button>
                 </form>
               )}
 
-              {/* TAB 2: OUTSTATION FORM */}
+              {/* TAB 2: OUTSTATION */}
               {activeTab === 'outstation' && (
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Pickup Location</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Pickup</label>
                       <input
                         type="text"
                         required
                         value={outstationForm.pickup}
                         onChange={(e) => setOutstationForm({ ...outstationForm, pickup: e.target.value })}
-                        placeholder="Vizag"
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Destination</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Destination</label>
                       <input
                         type="text"
                         required
                         value={outstationForm.destination}
                         onChange={(e) => setOutstationForm({ ...outstationForm, destination: e.target.value })}
-                        placeholder="Araku / Vijayawada..."
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                       />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5">Trip Type</label>
-                    <div className="grid grid-cols-2 gap-2">
-                      {['One Way', 'Round Trip'].map((t) => (
-                        <button
-                          key={t}
-                          type="button"
-                          onClick={() => setOutstationForm({ ...outstationForm, tripType: t })}
-                          className={`py-2 text-xs font-bold rounded-lg border transition-all ${
-                            outstationForm.tripType === t
-                              ? 'bg-emerald-600 text-white border-emerald-400'
-                              : 'bg-slate-900/60 text-slate-300 border-white/10 hover:border-white/30'
-                          }`}
-                        >
-                          {t}
-                        </button>
-                      ))}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Journey Date</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Travel Date</label>
                       <input
                         type="date"
                         required
                         value={outstationForm.date}
                         onChange={(e) => setOutstationForm({ ...outstationForm, date: e.target.value })}
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs md:text-sm text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Vehicle</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Vehicle</label>
                       <select
                         value={outstationForm.vehicle}
                         onChange={(e) => setOutstationForm({ ...outstationForm, vehicle: e.target.value })}
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-2 py-2 text-xs text-white focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
                       >
                         <option value="Swift Dzire">Swift Dzire (Sedan)</option>
                         <option value="Maruti Ertiga">Maruti Ertiga (6 Seater)</option>
-                        <option value="Toyota Innova Crysta">Innova Crysta (Luxury)</option>
-                        <option value="Tempo Traveller">Tempo Traveller</option>
+                        <option value="Toyota Innova Crysta">Innova Crysta (7 Seater)</option>
                       </select>
                     </div>
                   </div>
 
                   <button
                     type="submit"
-                    className="btn btn-green w-full py-3.5 text-sm font-bold shadow-lg hover:shadow-emerald-500/40 mt-2"
+                    className="btn-cyan w-full py-3.5 text-xs font-black shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer"
                   >
-                    <span>Book Outstation Cab</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>Reserve Outstation Ride</span>
+                    <ChevronRight className="w-4 h-4 text-white" />
                   </button>
                 </form>
               )}
 
-              {/* TAB 3: AIRPORT TRANSFER FORM */}
+              {/* TAB 3: AIRPORT */}
               {activeTab === 'airport' && (
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
-                  <div className="grid grid-cols-2 gap-2 mb-2">
+                  <div className="grid grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => setAirportForm({ ...airportForm, type: 'pickup' })}
-                      className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                      className={`py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                         airportForm.type === 'pickup'
-                          ? 'bg-amber-500 text-white border-amber-400'
-                          : 'bg-slate-900/60 text-slate-300 border-white/10'
+                          ? 'bg-emerald-600 text-white border-emerald-600 font-extrabold shadow-sm'
+                          : 'bg-slate-100 text-slate-600 border-slate-200'
                       }`}
                     >
                       Airport Pickup
@@ -396,10 +344,10 @@ const Hero = ({ onOpenBookingModal }) => {
                     <button
                       type="button"
                       onClick={() => setAirportForm({ ...airportForm, type: 'drop' })}
-                      className={`py-2 text-xs font-bold rounded-lg border transition-all ${
+                      className={`py-2 text-xs font-bold rounded-xl border transition-all cursor-pointer ${
                         airportForm.type === 'drop'
-                          ? 'bg-amber-500 text-white border-amber-400'
-                          : 'bg-slate-900/60 text-slate-300 border-white/10'
+                          ? 'bg-emerald-600 text-white border-emerald-600 font-extrabold shadow-sm'
+                          : 'bg-slate-100 text-slate-600 border-slate-200'
                       }`}
                     >
                       Airport Drop
@@ -407,71 +355,48 @@ const Hero = ({ onOpenBookingModal }) => {
                   </div>
 
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1.5">Airport</label>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      {airportForm.type === 'pickup' ? 'Drop Address in Vizag' : 'Pickup Address in Vizag'}
+                    </label>
                     <input
                       type="text"
-                      readOnly
-                      value={airportForm.airport}
-                      className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs text-amber-300 font-semibold"
+                      required
+                      value={airportForm.location}
+                      onChange={(e) => setAirportForm({ ...airportForm, location: e.target.value })}
+                      placeholder="e.g. Rushikonda Beach Resort"
+                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">
-                        {airportForm.type === 'pickup' ? 'Drop Location' : 'Pickup Location'}
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={airportForm.location}
-                        onChange={(e) => setAirportForm({ ...airportForm, location: e.target.value })}
-                        placeholder="Vizag Address"
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Flight No (Optional)</label>
-                      <input
-                        type="text"
-                        value={airportForm.flightNo}
-                        onChange={(e) => setAirportForm({ ...airportForm, flightNo: e.target.value })}
-                        placeholder="6E-123"
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Date</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Date</label>
                       <input
                         type="date"
                         required
                         value={airportForm.date}
                         onChange={(e) => setAirportForm({ ...airportForm, date: e.target.value })}
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-bold text-slate-300 mb-1.5">Flight Time</label>
+                      <label className="block text-xs font-bold text-slate-700 mb-1.5">Flight Time</label>
                       <input
                         type="time"
                         required
                         value={airportForm.time}
                         onChange={(e) => setAirportForm({ ...airportForm, time: e.target.value })}
-                        className="w-full bg-slate-900/90 border border-white/15 rounded-xl px-3 py-2 text-xs text-white focus:outline-none"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
                       />
                     </div>
                   </div>
 
                   <button
                     type="submit"
-                    className="btn btn-orange w-full py-3.5 text-sm font-bold shadow-lg hover:shadow-orange-500/40 mt-2"
+                    className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black text-xs rounded-full shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer hover:scale-102 transition-all"
                   >
-                    <span>Book Airport Taxi</span>
-                    <ChevronRight className="w-4 h-4" />
+                    <span>Reserve Airport Taxi</span>
+                    <ChevronRight className="w-4 h-4 text-white" />
                   </button>
                 </form>
               )}

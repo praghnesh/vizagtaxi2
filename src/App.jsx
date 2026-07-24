@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
+import FareCalculator from './components/FareCalculator';
+import CabRadar from './components/CabRadar';
 import TourPackages from './components/TourPackages';
 import Fleet from './components/Fleet';
 import WhyChooseUs from './components/WhyChooseUs';
+import ComparisonMatrix from './components/ComparisonMatrix';
+import DriverHire from './components/DriverHire';
 import Services from './components/Services';
+import FaqSection from './components/FaqSection';
 import Testimonials from './components/Testimonials';
 import InstagramGallery from './components/InstagramGallery';
 import SocialLinks from './components/SocialLinks';
@@ -27,32 +32,47 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-orange-500 selection:text-white">
-      {/* Sticky Glass Navbar */}
+    <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-amber-500 selection:text-white font-sans antialiased">
+      {/* Sticky Coastal Glass Navbar */}
       <Navbar onOpenBookingModal={handleOpenBookingModal} />
 
-      {/* Hero Section with Floating 3-in-1 Booking Card */}
+      {/* Hero Section with Interactive Cab Reservation */}
       <Hero onOpenBookingModal={handleOpenBookingModal} />
 
-      {/* Section 2: Popular Tour Packages */}
+      {/* Interactive Coastal Route Simulator & Dynamic Slider */}
+      <FareCalculator onOpenBookingModal={handleOpenBookingModal} />
+
+      {/* Live Available Cab Radar Widget */}
+      <CabRadar onOpenBookingModal={handleOpenBookingModal} />
+
+      {/* Tour Packages Sightseeing Explorer */}
       <TourPackages onOpenBookingModal={handleOpenBookingModal} />
 
-      {/* Section 3: Luxury Fleet Showcase */}
+      {/* Luxury Vehicle Fleet Showroom */}
       <Fleet onOpenBookingModal={handleOpenBookingModal} />
 
-      {/* Section 4: Why Choose Vizag Taxi & Counter Stats */}
+      {/* Why Choose Us & Guarantees */}
       <WhyChooseUs />
 
-      {/* Section 5: Services */}
+      {/* Head-to-Head Comparison Matrix vs Ola/Uber */}
+      <ComparisonMatrix />
+
+      {/* Driver On Demand Service */}
+      <DriverHire onOpenBookingModal={handleOpenBookingModal} />
+
+      {/* Tailored Transportation Services */}
       <Services onOpenBookingModal={handleOpenBookingModal} />
 
-      {/* Section 6: Client Testimonials */}
+      {/* Frequently Asked Questions Accordion */}
+      <FaqSection />
+
+      {/* Client Testimonials Slider */}
       <Testimonials />
 
-      {/* Section 7: Instagram Gallery */}
+      {/* Instagram Gallery Grid */}
       <InstagramGallery />
 
-      {/* Section 8: Social Links */}
+      {/* Social Links */}
       <SocialLinks />
 
       {/* Footer */}
@@ -65,7 +85,7 @@ function App() {
         modalData={modalData}
       />
 
-      {/* Floating Action Buttons (WhatsApp & Call) */}
+      {/* Floating Action Buttons */}
       <FloatingActions onOpenBookingModal={handleOpenBookingModal} />
     </div>
   );

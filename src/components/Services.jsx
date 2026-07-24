@@ -1,130 +1,171 @@
 import React from 'react';
-import { Plane, Train, Building, Compass, Navigation, Heart, Church, Map, Users, UserCheck, ArrowUpRight } from 'lucide-react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Plane, Train, Building, Compass, Navigation as NavIcon, Heart, Church, Map, Users, UserCheck, ArrowUpRight, Sparkles } from 'lucide-react';
+
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 
 const servicesList = [
   {
     id: 'airport',
     title: 'Airport Transfers',
-    desc: '24/7 VTZ Airport pickups & drops.',
+    desc: '24/7 VTZ Airport pickups & drops with flight tracking.',
     icon: Plane,
     badge: 'Popular',
+    pricing: 'Starts ₹599'
   },
   {
     id: 'railway',
     title: 'Railway Pickup',
-    desc: 'Instant pickup from VSKP & Duvvada.',
+    desc: 'Instant station platform pickup from VSKP & Duvvada.',
     icon: Train,
     badge: 'On-Time',
+    pricing: 'Starts ₹399'
   },
   {
     id: 'corporate',
     title: 'Corporate Cabs',
-    desc: 'Executive chauffeur cabs & monthly billing.',
+    desc: 'Executive chauffeur cabs with automated GST invoices.',
     icon: Building,
     badge: 'GST Invoice',
+    pricing: 'Corporate Rate'
   },
   {
     id: 'outstation',
     title: 'Outstation Taxi',
-    desc: 'One-way & round trips to Vijayawada/Hyd.',
+    desc: 'One-way & round trips to Vijayawada, Vizianagaram, Hyd.',
     icon: Compass,
-    badge: 'Fixed Rates',
+    badge: 'Fixed Fares',
+    pricing: '₹12 / KM'
   },
   {
     id: 'local',
-    title: 'Local City Ride',
-    desc: 'Flexible 4/6/8/10 hours rental.',
-    icon: Navigation,
+    title: 'Local City Hourly',
+    desc: 'Flexible 4/8/12 hours local rental with unlimited stops.',
+    icon: NavIcon,
     badge: 'Best Value',
+    pricing: 'Starts ₹1,499'
   },
   {
     id: 'wedding',
-    title: 'Wedding Car Rental',
-    desc: 'Decorated Innova Crysta & guest buses.',
+    title: 'Wedding Rental',
+    desc: 'Decorated Innova Crysta & guest mini buses.',
     icon: Heart,
     badge: 'Luxury',
+    pricing: 'Custom Quote'
   },
   {
     id: 'temple',
-    title: 'Temple Tours',
-    desc: 'Simhachalam & Annavaram circuits.',
+    title: 'Temple Pilgrimage',
+    desc: 'Simhachalam, Annavaram & Arasavalli temple circuits.',
     icon: Church,
     badge: 'Spiritual',
+    pricing: 'Starts ₹1,799'
   },
   {
     id: 'tourist',
-    title: 'Tourist Packages',
-    desc: 'Araku, Lambasingi & Borra hill tours.',
+    title: 'Araku Hill Tours',
+    desc: 'Araku, Lambasingi & Borra Caves hill packages.',
     icon: Map,
     badge: 'Top Choice',
+    pricing: 'Starts ₹1,999'
   },
   {
     id: 'employee',
-    title: 'Employee Transport',
-    desc: 'Daily IT park staff commute solutions.',
+    title: 'Employee Shuttles',
+    desc: 'Daily IT SEZ & Navy personnel staff drop solutions.',
     icon: Users,
     badge: 'Contract',
+    pricing: 'Monthly Contract'
   },
   {
     id: 'driver',
     title: 'Driver On Demand',
-    desc: 'Hire verified drivers for your luxury car.',
+    desc: 'Hire police-verified drivers for your personal car.',
     icon: UserCheck,
     badge: 'Verified',
+    pricing: 'Starts ₹499'
   },
 ];
 
 const Services = ({ onOpenBookingModal }) => {
   return (
-    <section id="services" className="py-8 md:py-12 bg-slate-50 relative overflow-hidden">
-      <div className="container mx-auto px-4 md:px-8">
+    <section id="services" className="py-12 md:py-18 bg-slate-50 text-slate-900 relative overflow-hidden border-b border-slate-200">
+      
+      {/* Background Glow */}
+      <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-sky-100/50 rounded-full blur-[160px] pointer-events-none" />
+
+      <div className="container relative z-10 mx-auto px-4 md:px-8">
         
-        {/* Title Header without Pill Badge or Arrow Controls */}
-        <div className="text-center mb-6">
-          <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900">
-            Our Premium <span className="gradient-text-green">Cab Services</span>
+        {/* Header */}
+        <div className="text-center max-w-3xl mx-auto mb-8">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-50 border border-sky-200 text-sky-700 text-[11px] font-bold mb-2 shadow-2xs">
+            <Sparkles className="w-3.5 h-3.5 text-sky-600" />
+            <span>FULL SPECTRUM CAB SERVICES</span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-black font-heading text-slate-900 tracking-tight">
+            Our Complete <span className="gradient-text-cyan">Taxi Solutions</span>
           </h2>
-          <p className="text-slate-600 text-xs md:text-sm mt-1">
-            Swipe horizontally to browse our tailored transportation services.
+          <p className="text-slate-600 text-xs md:text-sm mt-1 max-w-xl mx-auto">
+            Swipe to view all tailored travel solutions across Visakhapatnam.
           </p>
         </div>
 
-        {/* Compact Horizontal Scrollable Cards */}
-        <div className="flex gap-3.5 overflow-x-auto scrollbar-none pb-4 pt-1 -mx-4 px-4 md:mx-0 md:px-0">
+        {/* Swiper Slider for Services */}
+        <Swiper
+          modules={[Autoplay, Navigation, Pagination]}
+          spaceBetween={14}
+          slidesPerView={1.2}
+          navigation
+          pagination={{ clickable: true }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          breakpoints={{
+            480: { slidesPerView: 2, spaceBetween: 16 },
+            768: { slidesPerView: 3, spaceBetween: 18 },
+            1024: { slidesPerView: 5, spaceBetween: 18 },
+          }}
+          className="pb-12"
+        >
           {servicesList.map((srv) => {
-            const IconComp = srv.icon;
+            const Icon = srv.icon;
             return (
-              <div
-                key={srv.id}
-                onClick={() => onOpenBookingModal('service', srv)}
-                className="w-[200px] min-w-[200px] max-w-[200px] bg-white p-4 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-emerald-500/40 transition-all duration-300 cursor-pointer flex flex-col justify-between group shrink-0"
-              >
-                <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-emerald-50 border border-emerald-200/60 flex items-center justify-center text-emerald-700 group-hover:bg-emerald-700 group-hover:text-white transition-colors">
-                      <IconComp className="w-5 h-5" />
+              <SwiperSlide key={srv.id} className="h-auto">
+                <div
+                  onClick={() => onOpenBookingModal('service', srv)}
+                  className="glass-card-light p-4 rounded-2xl border border-slate-200 hover:border-sky-400 transition-all flex flex-col justify-between cursor-pointer group shadow-2xs h-full"
+                >
+                  <div>
+                    <div className="flex items-center justify-between mb-2.5">
+                      <div className="w-8 h-8 rounded-lg bg-sky-50 border border-sky-200 text-sky-600 flex items-center justify-center group-hover:bg-sky-600 group-hover:text-white transition-colors">
+                        <Icon className="w-4 h-4" />
+                      </div>
+                      <span className="text-[9px] font-black uppercase px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200">
+                        {srv.badge}
+                      </span>
                     </div>
-                    <span className="text-[9px] uppercase tracking-wider font-extrabold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
-                      {srv.badge}
-                    </span>
+
+                    <h3 className="text-xs md:text-sm font-black text-slate-900 font-heading group-hover:text-sky-600 transition-colors leading-tight">
+                      {srv.title}
+                    </h3>
+                    <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                      {srv.desc}
+                    </p>
                   </div>
 
-                  <h3 className="text-sm font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                    {srv.title}
-                  </h3>
-                  <p className="text-[11px] text-slate-500 mt-1 line-clamp-2 leading-tight">
-                    {srv.desc}
-                  </p>
-                </div>
+                  <div className="pt-3 border-t border-slate-100 flex items-center justify-between mt-2.5 text-[11px]">
+                    <span className="font-extrabold text-amber-700 font-mono">{srv.pricing}</span>
+                    <div className="w-5 h-5 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-500 group-hover:text-sky-600 group-hover:border-sky-400">
+                      <ArrowUpRight className="w-3 h-3" />
+                    </div>
+                  </div>
 
-                <div className="mt-4 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] font-bold text-emerald-700">
-                  <span>Book Service</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
                 </div>
-              </div>
+              </SwiperSlide>
             );
           })}
-        </div>
+        </Swiper>
 
       </div>
     </section>
