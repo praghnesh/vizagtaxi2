@@ -14,7 +14,7 @@ const Navbar = ({ onOpenBookingModal }) => {
         setIsScrolled(false);
       }
 
-      const sections = ['home', 'simulator', 'radar', 'packages', 'fleet', 'why-us', 'comparison', 'faq', 'contact'];
+      const sections = ['home', 'packages', 'fleet', 'why-us', 'comparison', 'faq', 'contact'];
       const scrollPos = window.scrollY + 220;
 
       for (const section of sections) {
@@ -36,8 +36,6 @@ const Navbar = ({ onOpenBookingModal }) => {
 
   const navLinks = [
     { name: 'Home', href: '#home', id: 'home' },
-    { name: 'Route Simulator', href: '#simulator', id: 'simulator' },
-    { name: 'Live Cabs', href: '#radar', id: 'radar' },
     { name: 'Tour Packages', href: '#packages', id: 'packages' },
     { name: 'Fleet', href: '#fleet', id: 'fleet' },
     { name: 'Why Us', href: '#why-us', id: 'why-us' },

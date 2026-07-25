@@ -110,11 +110,11 @@ const InstagramGallery = () => {
                   </p>
                   <div className="flex items-center justify-between text-[10px] text-slate-300 mt-1 font-mono">
                     <span className="flex items-center gap-1">
-                      <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
+                      <Heart className="w-3 h-3 text-orange-400 fill-orange-400" />
                       {item.likes}
                     </span>
                     <span className="flex items-center gap-1">
-                      <MessageCircle className="w-3 h-3 text-sky-400" />
+                      <MessageCircle className="w-3 h-3 text-emerald-400" />
                       {item.comments}
                     </span>
                   </div>

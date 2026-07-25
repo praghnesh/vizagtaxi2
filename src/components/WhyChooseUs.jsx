@@ -10,21 +10,21 @@ const reasons = [
   },
   {
     icon: UserCheck,
-    title: 'Verified Chauffeurs',
-    description: 'Police-verified drivers with 5+ yrs mountain ghat experience.',
+    title: 'Verified Local Chauffeurs',
+    description: 'Police-verified, polite local drivers with 5+ years experience.',
     color: 'text-amber-700 bg-amber-50 border-amber-200'
   },
   {
     icon: Navigation,
     title: 'Live GPS Location',
     description: 'Live trip location link shared directly with family members.',
-    color: 'text-sky-700 bg-sky-50 border-sky-200'
+    color: 'text-emerald-700 bg-emerald-50 border-emerald-200'
   },
   {
     icon: PhoneCall,
     title: '24/7 Helpline Desk',
     description: 'Round-the-clock human call center in Vizag.',
-    color: 'text-blue-700 bg-blue-50 border-blue-200'
+    color: 'text-amber-700 bg-amber-50 border-amber-200'
   },
   {
     icon: DollarSign,
@@ -36,13 +36,13 @@ const reasons = [
     icon: Ban,
     title: 'Zero Surge Fees',
     description: 'No peak-hour surge multipliers or night surprise charges.',
-    color: 'text-rose-700 bg-rose-50 border-rose-200'
+    color: 'text-amber-700 bg-amber-50 border-amber-200'
   },
   {
     icon: Clock,
     title: '15-Min Prior Pickup',
     description: 'Chauffeur arrives 15 minutes ahead of scheduled time.',
-    color: 'text-purple-700 bg-purple-50 border-purple-200'
+    color: 'text-emerald-700 bg-emerald-50 border-emerald-200'
   },
   {
     icon: Sparkles,
@@ -54,7 +54,7 @@ const reasons = [
     icon: Building2,
     title: 'Corporate GST Billing',
     description: 'Instant GST invoice generation for business travelers.',
-    color: 'text-indigo-700 bg-indigo-50 border-indigo-200'
+    color: 'text-emerald-700 bg-emerald-50 border-emerald-200'
   },
   {
     icon: Zap,
@@ -76,7 +76,7 @@ const WhyChooseUs = () => {
     <section id="why-us" className="py-16 md:py-24 bg-white text-slate-900 relative overflow-hidden border-b border-slate-200">
       
       {/* Background Glow */}
-      <div className="absolute top-10 left-1/3 w-[500px] h-[500px] bg-sky-100/50 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 left-1/3 w-[500px] h-[500px] bg-emerald-100/50 rounded-full blur-[160px] pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-8">
         
@@ -110,23 +110,35 @@ const WhyChooseUs = () => {
           </p>
         </div>
 
-        {/* 10 Reasons Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+        {/* 10 Reasons Mobile Bento Grid (2-col on mobile, 5-col on desktop) */}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-2.5 sm:gap-4">
           {reasons.map((r, idx) => {
             const Icon = r.icon;
+            // Make cards 0, 4, 9 featured full-width (col-span-2 on mobile)
+            const isFeatured = idx === 0 || idx === 4 || idx === 9;
             return (
               <div
                 key={idx}
-                className="glass-card-light p-5 rounded-2xl border border-slate-200 hover:border-amber-400 transition-all flex flex-col justify-between"
+                className={`glass-card-light transition-all flex flex-col justify-between ${
+                  isFeatured
+                    ? 'col-span-2 sm:col-span-1 p-4 sm:p-5 rounded-2xl bg-slate-50/90 border-amber-300 shadow-xs'
+                    : 'col-span-1 p-3 sm:p-5 rounded-xl sm:rounded-2xl border-slate-200 hover:border-amber-400'
+                }`}
               >
                 <div>
-                  <div className={`w-10 h-10 rounded-xl ${r.color} flex items-center justify-center mb-3.5 border`}>
-                    <Icon className="w-5 h-5" />
+                  <div className={`rounded-lg sm:rounded-xl ${r.color} flex items-center justify-center border ${
+                    isFeatured ? 'w-9 h-9 sm:w-10 sm:h-10 mb-2.5 sm:mb-3.5' : 'w-8 h-8 sm:w-10 sm:h-10 mb-2 sm:mb-3.5'
+                  }`}>
+                    <Icon className={isFeatured ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-4 h-4 sm:w-5 sm:h-5'} />
                   </div>
-                  <h3 className="text-sm font-extrabold text-slate-900 font-heading">
+                  <h3 className={`font-extrabold text-slate-900 font-heading leading-snug ${
+                    isFeatured ? 'text-xs sm:text-sm' : 'text-[11px] sm:text-sm'
+                  }`}>
                     {r.title}
                   </h3>
-                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                  <p className={`mt-0.5 sm:mt-1 leading-snug sm:leading-relaxed ${
+                    isFeatured ? 'text-[11px] sm:text-xs text-slate-700' : 'text-[10px] sm:text-xs text-slate-500 line-clamp-2 sm:line-clamp-none'
+                  }`}>
                     {r.description}
                   </p>
                 </div>

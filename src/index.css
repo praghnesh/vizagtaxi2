@@ -6,11 +6,11 @@
   --bg-card-light: #FFFFFF;
   --bg-subtle-light: #F1F5F9;
 
-  --color-amber-gold: #D97706;
-  --color-amber-glow: rgba(217, 119, 6, 0.15);
+  --color-amber-gold: #EA580C;
+  --color-amber-glow: rgba(234, 88, 12, 0.15);
 
-  --color-ocean-cyan: #0284C7;
-  --color-ocean-glow: rgba(2, 132, 199, 0.15);
+  --color-ocean-cyan: #059669;
+  --color-ocean-glow: rgba(5, 150, 105, 0.15);
 
   --color-emerald-green: #059669;
   --color-emerald-glow: rgba(5, 150, 105, 0.15);
@@ -43,11 +43,11 @@ html {
   background: #F1F5F9;
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #F59E0B 0%, #0284C7 50%, #059669 100%);
+  background: #059669;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #D97706;
+  background: #047857;
 }
 
 /* Premium Light Glassmorphism Utilities */
@@ -64,8 +64,8 @@ html {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(245, 158, 11, 0.3);
-  box-shadow: 0 20px 45px -10px rgba(245, 158, 11, 0.12), 0 10px 25px -5px rgba(15, 23, 42, 0.04);
+  border: 1px solid rgba(234, 88, 12, 0.3);
+  box-shadow: 0 20px 45px -10px rgba(234, 88, 12, 0.12), 0 10px 25px -5px rgba(15, 23, 42, 0.04);
 }
 
 .glass-card-light {
@@ -78,62 +78,53 @@ html {
 
 .glass-card-light:hover {
   background: #FFFFFF;
-  border-color: rgba(2, 132, 199, 0.4);
+  border-color: rgba(5, 150, 105, 0.4);
   transform: translateY(-4px);
-  box-shadow: 0 20px 35px -10px rgba(2, 132, 199, 0.15);
+  box-shadow: 0 20px 35px -10px rgba(5, 150, 105, 0.15);
 }
 
-/* Light Theme Text Gradients */
+/* Light Theme Solid Accent Text Colors */
 .gradient-text-gold {
-  background: linear-gradient(135deg, #D97706 0%, #B45309 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #EA580C;
 }
 
 .gradient-text-cyan {
-  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #059669;
 }
 
 .gradient-text-emerald {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #059669;
 }
 
 /* Cyber Accent Buttons - Light Theme */
 .btn-gold {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+  background: #EA580C;
   color: #FFFFFF;
   font-weight: 800;
   border-radius: 9999px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 20px -4px rgba(245, 158, 11, 0.35);
+  box-shadow: 0 8px 20px -4px rgba(234, 88, 12, 0.35);
 }
 
 .btn-gold:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 25px -4px rgba(245, 158, 11, 0.5);
-  background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  box-shadow: 0 12px 25px -4px rgba(234, 88, 12, 0.5);
+  background: #C2410C;
 }
 
 .btn-cyan {
-  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  background: #059669;
   color: #FFFFFF;
   font-weight: 800;
   border-radius: 9999px;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 20px -4px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 8px 20px -4px rgba(5, 150, 105, 0.35);
 }
 
 .btn-cyan:hover {
   transform: translateY(-2px) scale(1.02);
-  box-shadow: 0 12px 25px -4px rgba(2, 132, 199, 0.5);
-  background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+  box-shadow: 0 12px 25px -4px rgba(5, 150, 105, 0.5);
+  background: #047857;
 }
 
 /* Custom Interactive Light Range Sliders */
@@ -154,25 +145,25 @@ input[type=range]::-webkit-slider-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #F59E0B 0%, #0284C7 100%);
+  background: #EA580C;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
   border: 2.5px solid #FFFFFF;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 input[type=range]::-webkit-slider-thumb:hover {
   transform: scale(1.25);
-  box-shadow: 0 6px 18px rgba(2, 132, 199, 0.5);
+  box-shadow: 0 6px 18px rgba(234, 88, 12, 0.5);
 }
 
 input[type=range]::-moz-range-thumb {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #F59E0B 0%, #0284C7 100%);
+  background: #EA580C;
   cursor: pointer;
-  box-shadow: 0 4px 12px rgba(2, 132, 199, 0.35);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
   border: 2.5px solid #FFFFFF;
 }
 
@@ -199,7 +190,7 @@ input[type=range]::-moz-range-thumb {
 .swiper-button-next,
 .swiper-button-prev {
   background: #FFFFFF !important;
-  color: #0284C7 !important;
+  color: #059669 !important;
   width: 44px !important;
   height: 44px !important;
   border-radius: 50% !important;
@@ -217,11 +208,18 @@ input[type=range]::-moz-range-thumb {
 
 .swiper-button-next:hover,
 .swiper-button-prev:hover {
-  background: #0284C7 !important;
+  background: #059669 !important;
   color: #FFFFFF !important;
-  border-color: #0284C7 !important;
+  border-color: #059669 !important;
   transform: scale(1.1);
-  box-shadow: 0 10px 25px rgba(2, 132, 199, 0.3) !important;
+  box-shadow: 0 10px 25px rgba(5, 150, 105, 0.3) !important;
+}
+
+@media (max-width: 639px) {
+  .swiper-button-next,
+  .swiper-button-prev {
+    display: none !important;
+  }
 }
 
 /* Radar Pulsing Rings for Light Theme */

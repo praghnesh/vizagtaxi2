@@ -149,101 +149,183 @@ const TourPackages = ({ onOpenBookingModal }) => {
           ))}
         </div>
 
-        {/* Swiper Slider for Tour Packages */}
-        <Swiper
-          modules={[Autoplay, Navigation, Pagination]}
-          spaceBetween={16}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 5000, disableOnInteraction: false }}
-          breakpoints={{
-            640: { slidesPerView: 2, spaceBetween: 20 },
-            1024: { slidesPerView: 3, spaceBetween: 24 },
-          }}
-          className="pb-12"
-        >
-          {filteredPackages.map((pkg) => (
-            <SwiperSlide key={pkg.id} className="h-auto">
-              <div className="glass-card-light rounded-2xl md:rounded-3xl overflow-hidden flex flex-col justify-between h-full border border-slate-200 hover:border-amber-400 group shadow-2xs">
-                
-                {/* Image Banner (Compact height h-40 on mobile, h-44 on desktop) */}
-                <div className="relative h-40 md:h-44 overflow-hidden bg-slate-100 shrink-0">
-                  <img
-                    src={pkg.image}
-                    alt={pkg.name}
-                    className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
+        {/* Render Single Centered Card if only 1 package, otherwise Swiper Slider */}
+        {filteredPackages.length === 1 ? (
+          <div className="max-w-sm sm:max-w-md md:max-w-lg mx-auto w-full pb-8">
+            {(() => {
+              const pkg = filteredPackages[0];
+              return (
+                <div className="glass-card-light rounded-xl md:rounded-3xl overflow-hidden flex flex-col justify-between h-full border border-slate-200 hover:border-amber-400 group shadow-md">
+                  {/* Image Banner */}
+                  <div className="relative h-40 sm:h-48 overflow-hidden bg-slate-100 shrink-0">
+                    <img
+                      src={pkg.image}
+                      alt={pkg.name}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
 
-                  <div className="absolute top-3 right-3 bg-amber-500 text-white font-black px-3 py-0.5 rounded-full text-[11px] shadow-sm">
-                    Starts {pkg.price}
-                  </div>
-
-                  <div className="absolute bottom-2.5 left-3 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-[10px] text-slate-900 font-bold border border-slate-200 shadow-2xs">
-                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    <span>{pkg.rating} ({pkg.reviews})</span>
-                  </div>
-                </div>
-
-                {/* Body Details (Compact Padding p-4) */}
-                <div className="p-4 md:p-5 flex-1 flex flex-col justify-between space-y-3">
-                  <div>
-                    <span className="text-[9px] md:text-[10px] font-black text-sky-700 uppercase tracking-widest block">{pkg.category}</span>
-                    <h3 className="text-base md:text-lg font-black text-slate-900 group-hover:text-amber-600 transition-colors mt-0.5 font-heading leading-tight">
-                      {pkg.name}
-                    </h3>
-                    <p className="text-xs text-slate-500 mt-1 line-clamp-1">
-                      {pkg.tagline}
-                    </p>
-                  </div>
-
-                  {/* Compact Specs Grid */}
-                  <div className="grid grid-cols-2 gap-1.5 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200">
-                    <div className="flex items-center gap-1 text-slate-700 font-semibold truncate">
-                      <Clock className="w-3 h-3 text-amber-600 shrink-0" />
-                      <span className="truncate">{pkg.duration}</span>
+                    <div className="absolute top-3 right-3 bg-amber-500 text-white font-black px-3 py-1 rounded-full text-xs shadow-sm">
+                      Starts {pkg.price}
                     </div>
-                    <div className="flex items-center gap-1 text-slate-700 font-semibold truncate">
-                      <Car className="w-3 h-3 text-sky-600 shrink-0" />
-                      <span className="truncate">{pkg.vehicle.split('/')[0]}</span>
+
+                    <div className="absolute bottom-2.5 left-3 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs text-slate-900 font-bold border border-slate-200 shadow-2xs">
+                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                      <span>{pkg.rating} ({pkg.reviews})</span>
                     </div>
                   </div>
 
-                  {/* Highlights */}
-                  <div className="space-y-1">
-                    {pkg.highlights.slice(0, 2).map((item, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 text-[11px] text-slate-700">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
-                        <span className="truncate">{item}</span>
+                  {/* Body Details */}
+                  <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-3">
+                    <div>
+                      <span className="text-[10px] font-black text-amber-700 uppercase tracking-widest block">{pkg.category}</span>
+                      <h3 className="text-base sm:text-xl font-black text-slate-900 group-hover:text-amber-600 transition-colors mt-0.5 font-heading leading-tight">
+                        {pkg.name}
+                      </h3>
+                      <p className="text-xs text-slate-500 mt-1">
+                        {pkg.tagline}
+                      </p>
+                    </div>
+
+                    {/* Compact Specs Grid */}
+                    <div className="grid grid-cols-2 gap-1.5 text-xs bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-1.5 text-slate-700 font-semibold truncate">
+                        <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                        <span className="truncate">{pkg.duration}</span>
                       </div>
-                    ))}
+                      <div className="flex items-center gap-1.5 text-slate-700 font-semibold truncate">
+                        <Car className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span className="truncate">{pkg.vehicle.split('/')[0]}</span>
+                      </div>
+                    </div>
+
+                    {/* Highlights */}
+                    <div className="space-y-1">
+                      {pkg.highlights.slice(0, 2).map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-1.5 text-xs text-slate-700">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                          <span>{item}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      <button
+                        onClick={() => setSelectedItineraryPkg(pkg)}
+                        className="py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-bold text-slate-800 border border-slate-200 transition-all text-center cursor-pointer"
+                      >
+                        Itinerary
+                      </button>
+
+                      <button
+                        onClick={() => onOpenBookingModal('tour', pkg)}
+                        className="btn-gold py-2.5 px-3 text-xs font-black text-white flex items-center justify-center gap-1 cursor-pointer shadow-sm"
+                      >
+                        <span>Book Tour</span>
+                        <ArrowRight className="w-3.5 h-3.5 text-white" />
+                      </button>
+                    </div>
                   </div>
-
-                  {/* Buttons */}
-                  <div className="grid grid-cols-2 gap-2 pt-1">
-                    <button
-                      onClick={() => setSelectedItineraryPkg(pkg)}
-                      className="py-2 px-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-[11px] font-bold text-slate-800 border border-slate-200 transition-all text-center cursor-pointer"
-                    >
-                      Itinerary
-                    </button>
-
-                    <button
-                      onClick={() => onOpenBookingModal('tour', pkg)}
-                      className="btn-gold py-2 px-2.5 text-[11px] font-black text-white flex items-center justify-center gap-1 cursor-pointer shadow-sm"
-                    >
-                      <span>Book Tour</span>
-                      <ArrowRight className="w-3 h-3 text-white" />
-                    </button>
-                  </div>
-
                 </div>
+              );
+            })()}
+          </div>
+        ) : (
+          <Swiper
+            modules={[Autoplay, Navigation, Pagination]}
+            spaceBetween={12}
+            slidesPerView={1.12}
+            navigation
+            pagination={{ clickable: true }}
+            autoplay={{ delay: 5000, disableOnInteraction: false }}
+            breakpoints={{
+              480: { slidesPerView: 1.25, spaceBetween: 14 },
+              640: { slidesPerView: 2, spaceBetween: 18 },
+              1024: { slidesPerView: 3, spaceBetween: 24 },
+            }}
+            className="pb-12"
+          >
+            {filteredPackages.map((pkg) => (
+              <SwiperSlide key={pkg.id} className="h-auto">
+                <div className="glass-card-light rounded-xl md:rounded-3xl overflow-hidden flex flex-col justify-between h-full border border-slate-200 hover:border-amber-400 group shadow-2xs">
+                  
+                  {/* Image Banner (Compact height h-32 on mobile, h-44 on desktop) */}
+                  <div className="relative h-32 sm:h-40 md:h-44 overflow-hidden bg-slate-100 shrink-0">
+                    <img
+                      src={pkg.image}
+                      alt={pkg.name}
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent" />
 
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                    <div className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-amber-500 text-white font-black px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] shadow-sm">
+                      Starts {pkg.price}
+                    </div>
+
+                    <div className="absolute bottom-2 left-2 sm:bottom-2.5 sm:left-3 flex items-center gap-1 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] sm:text-[10px] text-slate-900 font-bold border border-slate-200 shadow-2xs">
+                      <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-400" />
+                      <span>{pkg.rating} ({pkg.reviews})</span>
+                    </div>
+                  </div>
+
+                  {/* Body Details (Compact Padding p-3.5) */}
+                  <div className="p-3.5 sm:p-4 md:p-5 flex-1 flex flex-col justify-between space-y-2 sm:space-y-3">
+                    <div>
+                      <span className="text-[9px] sm:text-[10px] font-black text-amber-700 uppercase tracking-widest block">{pkg.category}</span>
+                      <h3 className="text-sm sm:text-base md:text-lg font-black text-slate-900 group-hover:text-amber-600 transition-colors mt-0.5 font-heading leading-tight">
+                        {pkg.name}
+                      </h3>
+                      <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 line-clamp-1">
+                        {pkg.tagline}
+                      </p>
+                    </div>
+
+                    {/* Compact Specs Grid */}
+                    <div className="grid grid-cols-2 gap-1 text-[10px] sm:text-[11px] bg-slate-50 p-2 rounded-lg sm:rounded-xl border border-slate-200">
+                      <div className="flex items-center gap-1 text-slate-700 font-semibold truncate">
+                        <Clock className="w-3 h-3 text-amber-600 shrink-0" />
+                        <span className="truncate">{pkg.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-1 text-slate-700 font-semibold truncate">
+                        <Car className="w-3 h-3 text-emerald-600 shrink-0" />
+                        <span className="truncate">{pkg.vehicle.split('/')[0]}</span>
+                      </div>
+                    </div>
+
+                    {/* Highlights */}
+                    <div className="space-y-0.5 sm:space-y-1">
+                      {pkg.highlights.slice(0, 2).map((item, idx) => (
+                        <div key={idx} className="flex items-center gap-1 text-[10px] sm:text-[11px] text-slate-700">
+                          <CheckCircle2 className="w-3 h-3 text-emerald-600 shrink-0" />
+                          <span className="truncate">{item}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Buttons */}
+                    <div className="grid grid-cols-2 gap-1.5 pt-1">
+                      <button
+                        onClick={() => setSelectedItineraryPkg(pkg)}
+                        className="py-1.5 sm:py-2 px-2 rounded-lg sm:rounded-xl bg-slate-100 hover:bg-slate-200 text-[10px] sm:text-[11px] font-bold text-slate-800 border border-slate-200 transition-all text-center cursor-pointer"
+                      >
+                        Itinerary
+                      </button>
+
+                      <button
+                        onClick={() => onOpenBookingModal('tour', pkg)}
+                        className="btn-gold py-1.5 sm:py-2 px-2 text-[10px] sm:text-[11px] font-black text-white flex items-center justify-center gap-1 cursor-pointer shadow-sm"
+                      >
+                        <span>Book Tour</span>
+                        <ArrowRight className="w-3 h-3 text-white" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
 
       </div>
 
@@ -263,7 +345,7 @@ const TourPackages = ({ onOpenBookingModal }) => {
             <p className="text-xs text-slate-600 mt-0.5">{selectedItineraryPkg.duration} • Fixed Price: <span className="text-amber-700 font-bold">{selectedItineraryPkg.price}</span></p>
 
             <div className="mt-5 space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-sky-700">Day Timeline & Key Stops:</h4>
+              <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-700">Day Timeline & Key Stops:</h4>
               <div className="space-y-2.5">
                 {selectedItineraryPkg.itinerary.map((item, idx) => (
                   <div key={idx} className="bg-slate-50 p-3 rounded-2xl border border-slate-200 flex gap-2.5">

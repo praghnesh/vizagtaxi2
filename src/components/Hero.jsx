@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, Car, Plane, ShieldCheck, Star, ChevronRight, CheckCircle2, Sparkles, Navigation, Zap } from 'lucide-react';
+import { Calendar, Clock, MapPin, Car, Plane, ShieldCheck, Star, ChevronRight, CheckCircle2, Sparkles, Navigation, Zap, ArrowRight, Repeat } from 'lucide-react';
+import LocationAutocompleteInput from './LocationAutocompleteInput';
 
 const Hero = ({ onOpenBookingModal }) => {
   const [activeTab, setActiveTab] = useState('hourly');
@@ -9,7 +10,7 @@ const Hero = ({ onOpenBookingModal }) => {
     date: new Date().toISOString().split('T')[0],
     time: '09:00',
     vehicle: 'Toyota Innova Crysta',
-    package: '8 Hours (80 KM)'
+    package: '8 Hours'
   });
 
   const [outstationForm, setOutstationForm] = useState({
@@ -49,11 +50,11 @@ const Hero = ({ onOpenBookingModal }) => {
   };
 
   return (
-    <section id="home" className="relative min-h-[92vh] flex items-center pt-28 pb-16 lg:py-32 overflow-hidden bg-gradient-to-b from-sky-50/70 via-amber-50/30 to-slate-50 border-b border-slate-200">
+    <section id="home" className="relative min-h-[92vh] flex items-center pt-28 pb-16 lg:py-32 overflow-hidden bg-slate-50 border-b border-slate-200">
       
       {/* Background Soft Coastal Glows */}
-      <div className="absolute top-10 left-1/4 w-[500px] h-[500px] bg-amber-200/40 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-sky-200/50 rounded-full blur-[160px] pointer-events-none" />
+      <div className="absolute top-10 left-1/4 w-[500px] h-[500px] bg-amber-200/30 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-10 right-10 w-[600px] h-[600px] bg-emerald-200/40 rounded-full blur-[160px] pointer-events-none" />
 
       {/* Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#cbd5e120_1px,transparent_1px),linear-gradient(to_bottom,#cbd5e120_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] pointer-events-none" />
@@ -87,7 +88,7 @@ const Hero = ({ onOpenBookingModal }) => {
             {/* Quick Location Pills */}
             <div className="space-y-2 pt-1">
               <div className="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center justify-center lg:justify-start gap-1.5">
-                <Navigation className="w-3.5 h-3.5 text-sky-600" />
+                <Navigation className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Popular Pickup Spots:</span>
               </div>
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
@@ -117,10 +118,10 @@ const Hero = ({ onOpenBookingModal }) => {
               </button>
 
               <a
-                href="#simulator"
-                className="px-8 py-4 text-sm font-bold text-slate-800 rounded-full bg-white border border-slate-300 hover:border-sky-500 hover:text-sky-600 transition-all text-center shadow-xs"
+                href="#fleet"
+                className="px-8 py-4 text-sm font-bold text-slate-800 rounded-full bg-white border border-slate-300 hover:border-emerald-500 hover:text-emerald-600 transition-all text-center shadow-xs"
               >
-                <span>Live Route Simulator</span>
+                <span>Explore Luxury Fleet</span>
               </a>
             </div>
 
@@ -135,7 +136,7 @@ const Hero = ({ onOpenBookingModal }) => {
                 <span>24/7 Live GPS Track</span>
               </div>
               <div className="flex items-center gap-2">
-                <Car className="w-4 h-4 text-sky-600" />
+                <Car className="w-4 h-4 text-emerald-600" />
                 <span>100% Sanitized AC Fleet</span>
               </div>
             </div>
@@ -177,7 +178,7 @@ const Hero = ({ onOpenBookingModal }) => {
                   onClick={() => setActiveTab('outstation')}
                   className={`py-2 px-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
                     activeTab === 'outstation'
-                      ? 'bg-white text-sky-700 font-black shadow-sm border border-slate-200'
+                      ? 'bg-white text-emerald-700 font-black shadow-sm border border-slate-200'
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
@@ -207,13 +208,12 @@ const Hero = ({ onOpenBookingModal }) => {
                       <MapPin className="w-3.5 h-3.5 text-amber-600" />
                       <span>Pickup Location in Vizag</span>
                     </label>
-                    <input
-                      type="text"
+                    <LocationAutocompleteInput
                       required
                       value={hourlyForm.pickup}
-                      onChange={(e) => setHourlyForm({ ...hourlyForm, pickup: e.target.value })}
-                      placeholder="e.g. RK Beach, Siripuram, Gajuwaka..."
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-amber-500 font-medium"
+                      onChange={(val) => setHourlyForm({ ...hourlyForm, pickup: val })}
+                      placeholder="Type area, city, or 6-digit Pincode..."
+                      focusColor="focus:border-amber-500"
                     />
                   </div>
 
@@ -238,6 +238,44 @@ const Hero = ({ onOpenBookingModal }) => {
                         onChange={(e) => setHourlyForm({ ...hourlyForm, time: e.target.value })}
                         className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500"
                       />
+                    </div>
+                  </div>
+
+                  {/* Rental Package Hours Buttons (Volume / Segmented Controls) */}
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5 flex items-center justify-between">
+                      <span className="flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-amber-600" />
+                        <span>Select Rental Package</span>
+                      </span>
+                      <span className="text-[10px] font-black text-amber-800 bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300">
+                        {hourlyForm.package}
+                      </span>
+                    </label>
+                    <div className="grid grid-cols-5 gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                      {[
+                        { hrs: '4', label: '4 Hrs', full: '4 Hours' },
+                        { hrs: '6', label: '6 Hrs', full: '6 Hours' },
+                        { hrs: '8', label: '8 Hrs', full: '8 Hours' },
+                        { hrs: '10', label: '10 Hrs', full: '10 Hours' },
+                        { hrs: '12', label: '12 Hrs', full: '12 Hours' },
+                      ].map((pkg) => {
+                        const isSelected = hourlyForm.package.startsWith(`${pkg.hrs} `) || hourlyForm.package === `${pkg.hrs} Hours`;
+                        return (
+                          <button
+                            key={pkg.hrs}
+                            type="button"
+                            onClick={() => setHourlyForm({ ...hourlyForm, package: pkg.full })}
+                            className={`py-2.5 px-1 rounded-lg text-center transition-all cursor-pointer flex items-center justify-center ${
+                              isSelected
+                                ? 'bg-amber-500 text-slate-950 font-black shadow-md border border-amber-400 scale-102'
+                                : 'bg-white hover:bg-amber-50 text-slate-700 font-bold border border-slate-200 hover:border-amber-300'
+                            }`}
+                          >
+                            <span className="text-xs font-black">{pkg.label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
 
@@ -268,25 +306,53 @@ const Hero = ({ onOpenBookingModal }) => {
               {/* TAB 2: OUTSTATION */}
               {activeTab === 'outstation' && (
                 <form onSubmit={handleBookingSubmit} className="space-y-4">
+                  {/* Trip Type Segmented Buttons */}
+                  <div className="grid grid-cols-2 gap-1.5 bg-slate-100 p-1.5 rounded-xl border border-slate-200">
+                    <button
+                      type="button"
+                      onClick={() => setOutstationForm({ ...outstationForm, tripType: 'One Way' })}
+                      className={`py-2 px-3 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        outstationForm.tripType === 'One Way'
+                          ? 'bg-emerald-600 text-white shadow-md'
+                          : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
+                      }`}
+                    >
+                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span>One Way Drop</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setOutstationForm({ ...outstationForm, tripType: 'Round Trip' })}
+                      className={`py-2 px-3 text-xs font-black rounded-lg transition-all flex items-center justify-center gap-1.5 cursor-pointer ${
+                        outstationForm.tripType === 'Round Trip'
+                          ? 'bg-emerald-600 text-white shadow-md'
+                          : 'bg-white text-slate-700 hover:bg-slate-50 border border-slate-200'
+                      }`}
+                    >
+                      <Repeat className="w-3.5 h-3.5" />
+                      <span>Round Trip</span>
+                    </button>
+                  </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1.5">Pickup</label>
-                      <input
-                        type="text"
+                      <LocationAutocompleteInput
                         required
                         value={outstationForm.pickup}
-                        onChange={(e) => setOutstationForm({ ...outstationForm, pickup: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
+                        onChange={(val) => setOutstationForm({ ...outstationForm, pickup: val })}
+                        placeholder="Type area or Pincode..."
+                        focusColor="focus:border-emerald-500"
                       />
                     </div>
                     <div>
                       <label className="block text-xs font-bold text-slate-700 mb-1.5">Destination</label>
-                      <input
-                        type="text"
+                      <LocationAutocompleteInput
                         required
                         value={outstationForm.destination}
-                        onChange={(e) => setOutstationForm({ ...outstationForm, destination: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
+                        onChange={(val) => setOutstationForm({ ...outstationForm, destination: val })}
+                        placeholder="Type city, area, or Pincode..."
+                        focusColor="focus:border-emerald-500"
                       />
                     </div>
                   </div>
@@ -299,7 +365,7 @@ const Hero = ({ onOpenBookingModal }) => {
                         required
                         value={outstationForm.date}
                         onChange={(e) => setOutstationForm({ ...outstationForm, date: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
                       />
                     </div>
                     <div>
@@ -307,7 +373,7 @@ const Hero = ({ onOpenBookingModal }) => {
                       <select
                         value={outstationForm.vehicle}
                         onChange={(e) => setOutstationForm({ ...outstationForm, vehicle: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-sky-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
                       >
                         <option value="Swift Dzire">Swift Dzire (Sedan)</option>
                         <option value="Maruti Ertiga">Maruti Ertiga (6 Seater)</option>
@@ -358,13 +424,12 @@ const Hero = ({ onOpenBookingModal }) => {
                     <label className="block text-xs font-bold text-slate-700 mb-1.5">
                       {airportForm.type === 'pickup' ? 'Drop Address in Vizag' : 'Pickup Address in Vizag'}
                     </label>
-                    <input
-                      type="text"
+                    <LocationAutocompleteInput
                       required
                       value={airportForm.location}
-                      onChange={(e) => setAirportForm({ ...airportForm, location: e.target.value })}
-                      placeholder="e.g. Rushikonda Beach Resort"
-                      className="w-full bg-slate-50 border border-slate-300 rounded-xl px-4 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
+                      onChange={(val) => setAirportForm({ ...airportForm, location: val })}
+                      placeholder="Type area, city, or 6-digit Pincode..."
+                      focusColor="focus:border-emerald-500"
                     />
                   </div>
 
@@ -393,7 +458,7 @@ const Hero = ({ onOpenBookingModal }) => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black text-xs rounded-full shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer hover:scale-102 transition-all"
+                    className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-full shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer hover:scale-102 transition-all"
                   >
                     <span>Reserve Airport Taxi</span>
                     <ChevronRight className="w-4 h-4 text-white" />

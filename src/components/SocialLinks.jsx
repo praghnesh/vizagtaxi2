@@ -13,7 +13,7 @@ const socials = [
     name: 'Instagram',
     icon: Instagram,
     url: 'https://instagram.com',
-    color: 'hover:bg-gradient-to-tr hover:from-amber-500 hover:to-rose-500 hover:text-white hover:border-rose-500',
+    color: 'hover:bg-pink-600 hover:text-white hover:border-pink-600',
     badge: '25k Followers'
   },
   {

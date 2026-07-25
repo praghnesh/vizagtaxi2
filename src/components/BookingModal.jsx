@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, CheckCircle, Phone, MessageCircle, ShieldCheck, ArrowRight, Calendar, MapPin, Car } from 'lucide-react';
+import LocationAutocompleteInput from './LocationAutocompleteInput';
 
 const BookingModal = ({ isOpen, onClose, modalData }) => {
   const [formData, setFormData] = useState({
@@ -137,23 +138,23 @@ const BookingModal = ({ isOpen, onClose, modalData }) => {
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">Pickup Address in Vizag *</label>
-                <input
-                  type="text"
+                <LocationAutocompleteInput
                   required
                   value={formData.pickup}
-                  onChange={(e) => setFormData({ ...formData, pickup: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
+                  onChange={(val) => setFormData({ ...formData, pickup: val })}
+                  placeholder="Type area, city, or 6-digit Pincode..."
+                  focusColor="focus:border-emerald-500"
                 />
               </div>
 
               <div>
                 <label className="block text-xs font-bold text-slate-700 mb-1.5">Destination / Package *</label>
-                <input
-                  type="text"
+                <LocationAutocompleteInput
                   required
                   value={formData.destination}
-                  onChange={(e) => setFormData({ ...formData, destination: e.target.value })}
-                  className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
+                  onChange={(val) => setFormData({ ...formData, destination: val })}
+                  placeholder="Type destination, city, or Pincode..."
+                  focusColor="focus:border-emerald-500"
                 />
               </div>
 

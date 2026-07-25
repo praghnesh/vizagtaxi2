@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import FareCalculator from './components/FareCalculator';
-import CabRadar from './components/CabRadar';
 import TourPackages from './components/TourPackages';
 import Fleet from './components/Fleet';
 import WhyChooseUs from './components/WhyChooseUs';
@@ -38,12 +36,6 @@ function App() {
 
       {/* Hero Section with Interactive Cab Reservation */}
       <Hero onOpenBookingModal={handleOpenBookingModal} />
-
-      {/* Interactive Coastal Route Simulator & Dynamic Slider */}
-      <FareCalculator onOpenBookingModal={handleOpenBookingModal} />
-
-      {/* Live Available Cab Radar Widget */}
-      <CabRadar onOpenBookingModal={handleOpenBookingModal} />
 
       {/* Tour Packages Sightseeing Explorer */}
       <TourPackages onOpenBookingModal={handleOpenBookingModal} />

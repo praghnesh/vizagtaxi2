@@ -93,7 +93,7 @@ const ComparisonMatrix = () => {
                   </td>
                   <td className="py-4 text-slate-600 pl-4">
                     <div className="flex items-center gap-2 text-slate-500">
-                      <div className="w-5 h-5 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center shrink-0">
                         <X className="w-3.5 h-3.5" />
                       </div>
                       <span>{row.competitors}</span>

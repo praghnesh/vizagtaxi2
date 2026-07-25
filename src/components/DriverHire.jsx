@@ -66,63 +66,64 @@ const DriverHire = ({ onOpenBookingModal }) => {
         {/* Swiper Slider for Drivers */}
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
-          spaceBetween={16}
-          slidesPerView={1}
+          spaceBetween={12}
+          slidesPerView={1.12}
           navigation
           pagination={{ clickable: true }}
           autoplay={{ delay: 4500, disableOnInteraction: false }}
           breakpoints={{
-            640: { slidesPerView: 2, spaceBetween: 20 },
+            480: { slidesPerView: 1.25, spaceBetween: 14 },
+            640: { slidesPerView: 2, spaceBetween: 18 },
             1024: { slidesPerView: 3, spaceBetween: 24 },
           }}
           className="pb-12"
         >
           {drivers.map((drv) => (
             <SwiperSlide key={drv.id} className="h-auto">
-              <div className="glass-card-light rounded-2xl md:rounded-3xl p-4 md:p-5 border border-slate-200 hover:border-emerald-400 transition-all flex flex-col justify-between shadow-2xs h-full">
+              <div className="glass-card-light rounded-xl md:rounded-3xl p-3.5 sm:p-5 border border-slate-200 hover:border-emerald-400 transition-all flex flex-col justify-between shadow-2xs h-full">
                 <div>
-                  <div className="flex items-center justify-between mb-3">
-                    <span className="text-[9px] md:text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                  <div className="flex items-center justify-between mb-2.5 sm:mb-3">
+                    <span className="text-[8px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                       {drv.badge}
                     </span>
-                    <div className="flex items-center gap-1 text-amber-700 text-[11px] font-bold bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
-                      <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+                    <div className="flex items-center gap-1 text-amber-700 text-[10px] sm:text-[11px] font-bold bg-white px-2 py-0.5 rounded-md border border-slate-200 shadow-2xs">
+                      <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 fill-amber-400 text-amber-400" />
                       <span>{drv.rating}</span>
                     </div>
                   </div>
 
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="w-11 h-11 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 font-black text-base font-heading shadow-2xs shrink-0">
+                  <div className="flex items-center gap-2.5 sm:gap-3 mb-2.5 sm:mb-3">
+                    <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-lg sm:rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 font-black text-xs sm:text-base font-heading shadow-2xs shrink-0">
                       {drv.name.split(' ').map(n => n[0]).join('')}
                     </div>
                     <div>
-                      <h3 className="text-base font-black text-slate-900 font-heading">
+                      <h3 className="text-sm sm:text-base font-black text-slate-900 font-heading leading-tight">
                         {drv.name}
                       </h3>
-                      <p className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5 font-semibold">
+                      <p className="text-[10px] sm:text-[11px] text-slate-500 flex items-center gap-1 mt-0.5 font-semibold">
                         <Award className="w-3 h-3 text-amber-600" />
                         <span>{drv.exp}</span>
                         <span>•</span>
-                        <span className="text-sky-700">{drv.trips}</span>
+                        <span className="text-emerald-700">{drv.trips}</span>
                       </p>
                     </div>
                   </div>
 
-                  <div className="space-y-1 text-[11px] bg-slate-50 p-2.5 rounded-xl border border-slate-200 mb-3">
+                  <div className="space-y-1 text-[10px] sm:text-[11px] bg-slate-50 p-2 sm:p-2.5 rounded-lg sm:rounded-xl border border-slate-200 mb-2.5 sm:mb-3">
                     <div className="flex justify-between text-slate-600">
                       <span className="text-slate-500">Specialty</span>
-                      <span className="font-bold text-slate-900">{drv.specialty}</span>
+                      <span className="font-bold text-slate-900 truncate ml-1">{drv.specialty}</span>
                     </div>
                     <div className="flex justify-between text-slate-600">
                       <span className="text-slate-500">Languages</span>
-                      <span className="font-bold text-slate-900">{drv.languages}</span>
+                      <span className="font-bold text-slate-900 truncate ml-1">{drv.languages}</span>
                     </div>
                   </div>
                 </div>
 
                 <button
                   onClick={() => onOpenBookingModal('driver', drv)}
-                  className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-700 text-white font-black text-xs rounded-full shadow-sm flex items-center justify-center gap-1.5 cursor-pointer hover:scale-101 transition-all"
+                  className="w-full py-2 sm:py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-[11px] sm:text-xs rounded-full shadow-sm flex items-center justify-center gap-1.5 cursor-pointer hover:scale-101 transition-all"
                 >
                   <span>Hire {drv.name.split(' ')[0]} (₹499/Day)</span>
                   <ChevronRight className="w-3.5 h-3.5 text-white" />

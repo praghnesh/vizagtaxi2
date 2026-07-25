@@ -23,7 +23,7 @@ const Footer = ({ onOpenBookingModal }) => {
               <span className="text-2xl font-black text-white font-heading tracking-tight">
                 VIZAG<span className="text-amber-400">TAXI</span>
               </span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-gradient-to-r from-amber-500 to-cyan-500 text-slate-950">
+              <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-amber-400 text-slate-950">
                 VIP FLEET
               </span>
             </div>
@@ -68,7 +68,7 @@ const Footer = ({ onOpenBookingModal }) => {
 
           {/* Col 3: Popular Routes */}
           <div>
-            <h4 className="text-sm font-black text-white mb-4 border-l-4 border-cyan-400 pl-3 font-heading uppercase tracking-wider">
+            <h4 className="text-sm font-black text-white mb-4 border-l-4 border-amber-500 pl-3 font-heading uppercase tracking-wider">
               Popular Routes
             </h4>
             <ul className="space-y-2.5 text-xs font-bold text-slate-400">
@@ -81,8 +81,8 @@ const Footer = ({ onOpenBookingModal }) => {
                 'Vizag to Hyderabad'
               ].map((route) => (
                 <li key={route}>
-                  <button onClick={() => onOpenBookingModal('route', { destination: route })} className="hover:text-cyan-400 transition-colors text-left flex items-center gap-1.5 cursor-pointer">
-                    <span className="text-cyan-400">›</span> {route}
+                  <button onClick={() => onOpenBookingModal('route', { destination: route })} className="hover:text-emerald-400 transition-colors text-left flex items-center gap-1.5 cursor-pointer">
+                    <span className="text-emerald-400">›</span> {route}
                   </button>
                 </li>
               ))}
@@ -110,7 +110,7 @@ const Footer = ({ onOpenBookingModal }) => {
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-cyan-400 shrink-0" />
+                <Mail className="w-4 h-4 text-emerald-400 shrink-0" />
                 <a href="mailto:info@vizagtaxi.com" className="text-slate-300 hover:text-white">
                   info@vizagtaxi.com
                 </a>

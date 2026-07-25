@@ -130,7 +130,7 @@ const Testimonials = () => {
                         <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                       ))}
                     </div>
-                    <span className="text-[10px] font-black text-sky-700 uppercase tracking-widest bg-sky-50 px-2.5 py-0.5 rounded-full border border-sky-200">
+                    <span className="text-[10px] font-black text-emerald-700 uppercase tracking-widest bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                       {rev.trip}
                     </span>
                   </div>
