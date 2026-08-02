@@ -408,8 +408,8 @@ const HourlyRentalsPage = ({ onOpenBookingModal }) => {
         {/* 2-Column Section: Left (Vehicle Tariffs) & Right (Live Location Map & Rules) */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Column 1: Fleet Cards (7 Cols) */}
-          <div className="lg:col-span-7 space-y-4">
+          {/* Column 1: Fleet Cards (7 Cols) - Shown below map on mobile, left on desktop */}
+          <div className="lg:col-span-7 space-y-4 order-2 lg:order-1">
             <div className="flex items-center justify-between">
               <h2 className="text-base font-black text-slate-900 font-heading uppercase tracking-wider flex items-center gap-2">
                 <Car className="w-5 h-5 text-emerald-600" />
@@ -528,8 +528,8 @@ const HourlyRentalsPage = ({ onOpenBookingModal }) => {
 
           </div>
 
-          {/* Column 2: Interactive Live Pickup Map & Terms (5 Cols) */}
-          <div className="lg:col-span-5 space-y-6">
+          {/* Column 2: Interactive Live Pickup Map & Terms (5 Cols) - Shown on top on mobile, right on desktop */}
+          <div className="lg:col-span-5 space-y-6 order-1 lg:order-2">
             
             {/* Live Location Map */}
             <div className="h-[400px]">
