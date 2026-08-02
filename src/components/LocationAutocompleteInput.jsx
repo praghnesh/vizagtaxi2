@@ -3,6 +3,14 @@ import { MapPin, Loader2, Search, Check } from 'lucide-react';
 
 // Curated Fast Instant Dataset for instant 0ms autocomplete
 const POPULAR_LOCATIONS = [
+  // Official Tour Packages
+  { title: 'Araku 1 Day Tour Package', details: 'Borra Caves, Katiki Waterfalls, Coffee Plantation & 9 Spots', pincode: 'Tour' },
+  { title: 'Vizag 1 Day Sightseeing Tour', details: 'Rushikonda, Bheemili, Submarine & Aircraft Museums (13 Spots)', pincode: 'Tour' },
+  { title: 'Vizag 2 Days Tour Package', details: 'Complete Vizag Coastal, Simhachalam & Yarada Beach (21 Spots)', pincode: 'Tour' },
+  { title: 'Vizag 2D & Araku 1D Combo (3 Days)', details: '3 Days Vizag Coastal + Simhachalam + Araku Valley Hills', pincode: 'Tour' },
+  { title: 'Vizag, Araku & Lambasingi (4D/3N)', details: 'Ultimate 4 Days Tour: Coastal Beaches, Caves & Kashmir of AP', pincode: 'Tour' },
+  { title: 'Vizag to Annavaram Temple Tour', details: 'Ratnagiri Satyanarayana Swamy Shrine & Pampa River', pincode: 'Tour' },
+
   // Vizag Core Areas & Pincodes
   { title: 'Visakhapatnam Railway Station (VSKP)', details: 'Dwaraka Nagar, Vizag, AP - 530004', pincode: '530004' },
   { title: 'Visakhapatnam Intl Airport (VTZ)', details: 'Nadapuru, Vizag, AP - 530009', pincode: '530009' },

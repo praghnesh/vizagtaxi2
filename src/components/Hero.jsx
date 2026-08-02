@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Calendar, Clock, MapPin, Car, Plane, ShieldCheck, Star, ChevronRight, CheckCircle2, Sparkles, Navigation, Zap, ArrowRight, Repeat } from 'lucide-react';
 import LocationAutocompleteInput from './LocationAutocompleteInput';
 
-const Hero = ({ onOpenBookingModal }) => {
+const Hero = ({ onOpenBookingModal, onOpenHourlyModal }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('hourly');
 
   const [hourlyForm, setHourlyForm] = useState({
@@ -10,7 +12,7 @@ const Hero = ({ onOpenBookingModal }) => {
     date: new Date().toISOString().split('T')[0],
     time: '09:00',
     vehicle: 'Toyota Innova Crysta',
-    package: '8 Hours'
+    package: '4 Hours'
   });
 
   const [outstationForm, setOutstationForm] = useState({
@@ -32,15 +34,17 @@ const Hero = ({ onOpenBookingModal }) => {
 
   const handleBookingSubmit = (e) => {
     e.preventDefault();
-    let bookingData = {};
     if (activeTab === 'hourly') {
-      bookingData = { type: 'Hourly Rental', ...hourlyForm };
-    } else if (activeTab === 'outstation') {
-      bookingData = { type: 'Outstation Cab', ...outstationForm };
+      navigate('/hourly-rentals', { state: hourlyForm });
     } else {
-      bookingData = { type: 'Airport Transfer', ...airportForm };
+      let bookingData = {};
+      if (activeTab === 'outstation') {
+        bookingData = { type: 'Outstation Cab', ...outstationForm };
+      } else {
+        bookingData = { type: 'Airport Transfer', ...airportForm };
+      }
+      onOpenBookingModal('form', bookingData);
     }
-    onOpenBookingModal('form', bookingData);
   };
 
   const setPresetPickup = (loc) => {
@@ -286,10 +290,25 @@ const Hero = ({ onOpenBookingModal }) => {
                       onChange={(e) => setHourlyForm({ ...hourlyForm, vehicle: e.target.value })}
                       className="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-amber-500 font-medium"
                     >
-                      <option value="Swift Dzire (4+1)">Swift Dzire / Etios (Sedan - AC)</option>
-                      <option value="Maruti Ertiga (6+1)">Maruti Ertiga (SUV 6 Seater - AC)</option>
-                      <option value="Toyota Innova Crysta">Toyota Innova Crysta (Luxury 7 Seater)</option>
-                      <option value="Tempo Traveller (12+1)">Tempo Traveller (12 Seater Luxury)</option>
+                      <option value="Sedan Car (Dzire / Glanza)">Sedan Car - Dzire / Glanza (4 Seats)</option>
+                      <option value="Mid-Size SUV">Mid-Size SUV - Creta / Brezza (5 Seats)</option>
+                      <option value="Maruti Ertiga">Maruti Ertiga (6-7 Seats)</option>
+                      <option value="Kia Carens">Kia Carens (6-7 Seats)</option>
+                      <option value="Innova Crysta">Innova Crysta (7 Seats)</option>
+                      <option value="Innova Hycross">Innova Hycross Hybrid (7 Seats)</option>
+                      <option value="Toyota Fortuner">Toyota Fortuner 4x4 (7 Seats)</option>
+                      <option value="BMW & Audi Luxury">BMW & Audi Luxury (4 Seats)</option>
+                      <option value="9-Seater Tempo Traveller">9-Seater AC Tempo Traveller</option>
+                      <option value="12-Seater Tempo Traveller">12-Seater AC Tempo Traveller</option>
+                      <option value="16-Seater Tempo Traveller">16-Seater Force Urbania / Traveller</option>
+                      <option value="17-Seater Tempo Traveller">17-Seater AC Tempo Traveller</option>
+                      <option value="20-Seater Tempo Traveller">20-Seater AC Tempo Traveller</option>
+                      <option value="24-Seater AC Mini Bus">24-Seater AC Mini Bus</option>
+                      <option value="28-Seater AC Mini Bus">28-Seater AC Mini Bus</option>
+                      <option value="36-Seater AC Luxury Bus">36-Seater AC Luxury Bus</option>
+                      <option value="40-Seater AC Deluxe Coach">40-Seater AC Deluxe Coach</option>
+                      <option value="20 Seater + 20 Sleeper AC Bus">20 Seater + 20 Sleeper AC Bus</option>
+                      <option value="36 AC Sleeper Bus">36 AC Sleeper Bus</option>
                     </select>
                   </div>
 
@@ -299,6 +318,14 @@ const Hero = ({ onOpenBookingModal }) => {
                   >
                     <span>Reserve Hourly Cab</span>
                     <ChevronRight className="w-4 h-4 text-white" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => navigate('/hourly-rentals', { state: hourlyForm })}
+                    className="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-xl border border-emerald-300 flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-2xs mt-2"
+                  >
+                    <span>View Complete Hourly Rate Card & Live Map →</span>
                   </button>
                 </form>
               )}
@@ -373,11 +400,27 @@ const Hero = ({ onOpenBookingModal }) => {
                       <select
                         value={outstationForm.vehicle}
                         onChange={(e) => setOutstationForm({ ...outstationForm, vehicle: e.target.value })}
-                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500"
+                        className="w-full bg-slate-50 border border-slate-300 rounded-xl px-2 py-2.5 text-xs text-slate-900 focus:outline-none focus:border-emerald-500 font-medium"
                       >
-                        <option value="Swift Dzire">Swift Dzire (Sedan)</option>
-                        <option value="Maruti Ertiga">Maruti Ertiga (6 Seater)</option>
-                        <option value="Toyota Innova Crysta">Innova Crysta (7 Seater)</option>
+                        <option value="Sedan Car (Dzire / Glanza)">Sedan Car - Dzire / Glanza (4 Seats)</option>
+                        <option value="Mid-Size SUV">Mid-Size SUV - Creta / Brezza (5 Seats)</option>
+                        <option value="Maruti Ertiga">Maruti Ertiga (6-7 Seats)</option>
+                        <option value="Kia Carens">Kia Carens (6-7 Seats)</option>
+                        <option value="Innova Crysta">Innova Crysta (7 Seats)</option>
+                        <option value="Innova Hycross">Innova Hycross Hybrid (7 Seats)</option>
+                        <option value="Toyota Fortuner">Toyota Fortuner 4x4 (7 Seats)</option>
+                        <option value="BMW & Audi Luxury">BMW & Audi Luxury (4 Seats)</option>
+                        <option value="9-Seater Tempo Traveller">9-Seater AC Tempo Traveller</option>
+                        <option value="12-Seater Tempo Traveller">12-Seater AC Tempo Traveller</option>
+                        <option value="16-Seater Tempo Traveller">16-Seater Force Urbania / Traveller</option>
+                        <option value="17-Seater Tempo Traveller">17-Seater AC Tempo Traveller</option>
+                        <option value="20-Seater Tempo Traveller">20-Seater AC Tempo Traveller</option>
+                        <option value="24-Seater AC Mini Bus">24-Seater AC Mini Bus</option>
+                        <option value="28-Seater AC Mini Bus">28-Seater AC Mini Bus</option>
+                        <option value="36-Seater AC Luxury Bus">36-Seater AC Luxury Bus</option>
+                        <option value="40-Seater AC Deluxe Coach">40-Seater AC Deluxe Coach</option>
+                        <option value="20 Seater + 20 Sleeper AC Bus">20 Seater + 20 Sleeper AC Bus</option>
+                        <option value="36 AC Sleeper Bus">36 AC Sleeper Bus</option>
                       </select>
                     </div>
                   </div>

@@ -1,10 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Calendar, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Menu, X, Phone, Calendar, ChevronRight, ChevronDown, MapPin, Compass, Star } from 'lucide-react';
+
+const popularPackagesList = [
+  { id: 'araku_1day', name: 'Araku 1 Day Tour', duration: '1 Day (9 Spots)', price: '₹3,499', badge: 'Best Seller' },
+  { id: 'araku_1n2d', name: 'Araku 1N2D Tour Package', duration: '2D / 1N (Hotel & Meals)', price: '₹8,000', badge: 'Popular Stay' },
+  { id: 'vizag_1day', name: 'Vizag 1 Day Tour', duration: '1 Day (13 Spots)', price: '₹1,999', badge: 'Most Booked' },
+  { id: 'vizag_2days', name: 'Vizag 2 Days Tour', duration: '2 Days (21 Spots)', price: '₹3,499', badge: 'Top Rated' },
+  { id: 'vizag_araku_3days', name: 'Vizag 2D & Araku 1D Combo', duration: '3 Days Tour', price: '₹6,999', badge: 'Combo' },
+  { id: 'vizag_araku_lambasingi_4days', name: 'Vizag, Araku & Lambasingi', duration: '4 Days / 3 Nights', price: '₹9,999', badge: 'Ultimate' },
+  { id: 'annavaram_1day', name: 'Vizag to Annavaram Temple', duration: '1 Day Shrine Tour', price: '₹2,999', badge: 'Spiritual' },
+];
+
+const outstationCities = [
+  'Amadalavalasa',
+  'Annavaram',
+  'Araku Valley',
+  'Arasavalli',
+  'Bangalore',
+  'Bhadrachalam',
+  'Bhubaneswar',
+  'Bobbili',
+  'Chennai',
+  'Eluru',
+  'Guntur',
+  'Hyderabad',
+  'Ichchapuram',
+  'Jagdalpur',
+  'Kakinada',
+  'Khammam',
+  'Kolkata',
+  'Kurnool',
+  'Lambasingi',
+  'Narasannapeta',
+  'Nellore',
+  'Palakollu',
+  'Palakonda',
+  'Palasa',
+  'Parvathipuram',
+  'Raipur',
+  'Rajahmundry',
+  'Ravulapalem',
+  'Razam',
+  'Sompeta',
+  'Srikakulam',
+  'Srimukhalingam',
+  'Tirupati',
+  'Tuni',
+  'Vijayawada',
+  'Vizianagaram'
+];
 
 const Navbar = ({ onOpenBookingModal }) => {
+  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [isHoveringPackages, setIsHoveringPackages] = useState(false);
+  const [mobileOutstationOpen, setMobileOutstationOpen] = useState(false);
+  const hoverTimeoutRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,9 +88,26 @@ const Navbar = ({ onOpenBookingModal }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleMouseEnterPackages = () => {
+    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
+    setIsHoveringPackages(true);
+  };
+
+  const handleMouseLeavePackages = () => {
+    hoverTimeoutRef.current = setTimeout(() => {
+      setIsHoveringPackages(false);
+    }, 200);
+  };
+
+  const handleSelectCity = (city) => {
+    setIsHoveringPackages(false);
+    setMobileMenuOpen(false);
+    onOpenBookingModal('tour', { name: `${city} Outstation Tour`, destination: city });
+  };
+
   const navLinks = [
     { name: 'Home', href: '#home', id: 'home' },
-    { name: 'Tour Packages', href: '#packages', id: 'packages' },
+    { name: 'Tour Packages', href: '#packages', id: 'packages', hasDropdown: true },
     { name: 'Fleet', href: '#fleet', id: 'fleet' },
     { name: 'Why Us', href: '#why-us', id: 'why-us' },
     { name: 'Compare', href: '#comparison', id: 'comparison' },
@@ -54,7 +125,6 @@ const Navbar = ({ onOpenBookingModal }) => {
       >
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
           
-          {/* Brand Logo */}
           <a href="#home" className="flex items-center gap-3 group">
             <div className="relative p-1 rounded-xl bg-white border border-slate-200 shadow-sm group-hover:border-amber-500 transition-all">
               <div className="flex items-center gap-2 px-2.5 py-1 bg-slate-900 rounded-lg">
@@ -68,10 +138,97 @@ const Navbar = ({ onOpenBookingModal }) => {
             </div>
           </a>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden xl:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-full border border-slate-200 shadow-inner">
+          <nav className="hidden xl:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-full border border-slate-200 shadow-inner relative">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
+              if (link.hasDropdown) {
+                return (
+                  <div
+                    key={link.name}
+                    className="relative group"
+                    onMouseEnter={handleMouseEnterPackages}
+                    onMouseLeave={handleMouseLeavePackages}
+                  >
+                    <a
+                      href={link.href}
+                      className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-300 flex items-center gap-1 ${
+                        isActive || isHoveringPackages
+                          ? 'bg-white text-amber-700 shadow-sm font-extrabold border border-amber-200'
+                          : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                      }`}
+                    >
+                      <span>{link.name}</span>
+                      <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${isHoveringPackages ? 'rotate-180 text-amber-600' : ''}`} />
+                    </a>
+
+                    {isHoveringPackages && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-3 w-[720px] bg-white rounded-3xl p-5 shadow-2xl border border-slate-200 backdrop-blur-xl z-50 animate-in fade-in zoom-in-95 duration-200">
+                        <div className="mb-4">
+                          <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-3">
+                            <div className="flex items-center gap-2">
+                              <Star className="w-4 h-4 text-amber-500 fill-amber-400" />
+                              <span className="text-xs font-black text-slate-900 uppercase tracking-wide">Popular Tour Packages</span>
+                            </div>
+                            <span className="text-[10px] font-extrabold text-amber-800 bg-amber-100 px-2.5 py-0.5 rounded-full border border-amber-300">Most Booked</span>
+                          </div>
+                          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                            {popularPackagesList.map((pkg) => (
+                              <button
+                                key={pkg.name}
+                                type="button"
+                                onClick={() => {
+                                  setIsHoveringPackages(false);
+                                  navigate('/tour-packages', { state: { packageId: pkg.id } });
+                                }}
+                                className="p-3 rounded-2xl bg-amber-50/60 hover:bg-amber-500 text-left border border-amber-200/90 hover:border-amber-500 transition-all cursor-pointer group shadow-2xs hover:shadow-md flex flex-col justify-between"
+                              >
+                                <div className="flex items-center justify-between gap-1 mb-1.5">
+                                  <span className="text-[9px] font-black uppercase bg-amber-100 group-hover:bg-slate-950 text-amber-900 group-hover:text-amber-300 px-2 py-0.5 rounded-md border border-amber-300 group-hover:border-slate-800 transition-colors">
+                                    {pkg.badge}
+                                  </span>
+                                  <span className="text-xs font-black font-mono text-amber-700 group-hover:text-slate-950 transition-colors">
+                                    {pkg.price}
+                                  </span>
+                                </div>
+                                <div className="text-[12px] font-extrabold text-slate-900 group-hover:text-slate-950 leading-snug line-clamp-1 transition-colors">
+                                  {pkg.name}
+                                </div>
+                                <div className="text-[10px] text-slate-600 group-hover:text-slate-900 font-semibold mt-1 transition-colors">
+                                  {pkg.duration}
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="flex items-center justify-between border-b border-slate-100 pb-2 mb-2.5">
+                            <div className="flex items-center gap-2">
+                              <Compass className="w-4 h-4 text-amber-600" />
+                              <span className="text-xs font-black text-slate-900 uppercase tracking-wide">Outstation Tour Destinations</span>
+                            </div>
+                            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">36 Major Cities</span>
+                          </div>
+                          <div className="max-h-40 overflow-y-auto pr-1 flex flex-wrap gap-1.5 scrollbar-thin">
+                            {outstationCities.map((city) => (
+                              <button key={city} type="button" onClick={() => handleSelectCity(city)} className="px-3 py-1.5 rounded-xl bg-slate-50 hover:bg-amber-500 hover:text-white text-slate-700 font-bold text-[11px] border border-slate-200 hover:border-amber-500 transition-all cursor-pointer shadow-2xs flex items-center gap-1">
+                                <MapPin className="w-3 h-3 text-amber-500 group-hover:text-white" />
+                                <span>{city}</span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
+                          <span>Click any package or city for instant taxi booking</span>
+                          <a href="#packages" className="text-amber-600 font-bold hover:underline">View All Packages →</a>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <a
                   key={link.name}
@@ -102,6 +259,14 @@ const Navbar = ({ onOpenBookingModal }) => {
                 <div className="font-extrabold text-slate-900 tracking-wide text-xs">+91 98765 43210</div>
               </div>
             </a>
+
+            <Link
+              to="/hourly-rentals"
+              className="px-3.5 py-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold text-xs border border-emerald-300 flex items-center gap-1.5 cursor-pointer transition-all shadow-2xs"
+            >
+              <Compass className="w-3.5 h-3.5 text-emerald-600" />
+              <span>Hourly Rates & Map</span>
+            </Link>
 
             <button
               onClick={() => onOpenBookingModal('general')}
@@ -135,7 +300,7 @@ const Navbar = ({ onOpenBookingModal }) => {
         />
 
         <div
-          className={`absolute top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white border-l border-slate-200 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
+          className={`absolute top-0 right-0 bottom-0 w-[88%] max-w-sm bg-white border-l border-slate-200 shadow-2xl transition-transform duration-300 ease-out flex flex-col ${
             mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -151,18 +316,98 @@ const Navbar = ({ onOpenBookingModal }) => {
             </button>
           </div>
 
-          <div className="flex-1 overflow-y-auto p-4 space-y-1.5">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-3.5 text-slate-700 hover:text-amber-600 font-bold text-sm rounded-xl hover:bg-amber-50 border border-transparent transition-all"
-              >
-                <span>{link.name}</span>
-                <ChevronRight className="w-4 h-4 text-slate-400" />
-              </a>
-            ))}
+          <div className="flex-1 overflow-y-auto p-4 space-y-2">
+            {navLinks.map((link) => {
+              if (link.hasDropdown) {
+                return (
+                  <div key={link.name} className="space-y-2">
+                    <button
+                      type="button"
+                      onClick={() => setMobileOutstationOpen(!mobileOutstationOpen)}
+                      className="flex items-center justify-between w-full p-3.5 text-slate-800 font-black text-sm rounded-xl bg-amber-50/70 border border-amber-200 text-left transition-all"
+                    >
+                      <span className="flex items-center gap-2">
+                        <Compass className="w-4 h-4 text-amber-600" />
+                        <span>Tour Packages (Outstation)</span>
+                      </span>
+                      <ChevronDown className={`w-4 h-4 text-amber-600 transition-transform ${mobileOutstationOpen ? 'rotate-180' : ''}`} />
+                    </button>
+
+                    {/* Mobile Overflow Popover with Popular Packages & Outstation City Pills */}
+                    {mobileOutstationOpen && (
+                      <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 max-h-80 overflow-y-auto space-y-3 shadow-inner">
+                        {/* Section 1: POPULAR TOUR PACKAGES */}
+                        <div>
+                          <div className="text-[11px] font-black text-amber-800 uppercase tracking-wider px-1 mb-2 flex items-center gap-1">
+                            <Star className="w-3.5 h-3.5 text-amber-600 fill-amber-500" />
+                            <span>Popular Tour Packages:</span>
+                          </div>
+                          <div className="grid grid-cols-1 gap-1.5">
+                            {popularPackagesList.map((pkg) => (
+                              <button
+                                key={pkg.name}
+                                type="button"
+                                onClick={() => {
+                                  setMobileMenuOpen(false);
+                                  navigate('/tour-packages', { state: { packageId: pkg.id } });
+                                }}
+                                className="p-2.5 rounded-xl bg-white hover:bg-amber-500 hover:text-slate-950 text-left border border-amber-200 transition-all cursor-pointer flex items-center justify-between shadow-2xs group"
+                              >
+                                <div>
+                                  <div className="text-xs font-black text-slate-900 group-hover:text-slate-950 leading-tight">
+                                    {pkg.name}
+                                  </div>
+                                  <div className="text-[10px] text-slate-500 group-hover:text-slate-900 font-semibold">
+                                    {pkg.duration}
+                                  </div>
+                                </div>
+                                <span className="text-xs font-mono font-black text-amber-600 group-hover:text-slate-950 bg-amber-50 group-hover:bg-amber-400 px-2 py-0.5 rounded-md border border-amber-200">
+                                  {pkg.price}
+                                </span>
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Section 2: OUTSTATION DESTINATIONS */}
+                        <div>
+                          <div className="text-[11px] font-black text-slate-600 uppercase tracking-wider px-1 mb-2">
+                            Select Outstation Destination (36 Cities):
+                          </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {outstationCities.map((city) => (
+                              <button
+                                key={city}
+                                type="button"
+                                onClick={() => {
+                                  setMobileMenuOpen(false);
+                                  handleSelectCity(city);
+                                }}
+                                className="px-3 py-1.5 rounded-xl bg-white hover:bg-amber-500 hover:text-white text-slate-800 font-bold text-xs border border-slate-200 transition-all cursor-pointer shadow-2xs"
+                              >
+                                {city}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-3.5 text-slate-700 hover:text-amber-600 font-bold text-sm rounded-xl hover:bg-amber-50 border border-transparent transition-all"
+                >
+                  <span>{link.name}</span>
+                  <ChevronRight className="w-4 h-4 text-slate-400" />
+                </a>
+              );
+            })}
           </div>
 
           <div className="p-5 border-t border-slate-100 bg-slate-50 space-y-3">

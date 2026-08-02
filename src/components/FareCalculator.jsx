@@ -11,16 +11,31 @@ const popularRoutes = [
 ];
 
 const vehicleRates = {
-  sedan: { name: 'Swift Dzire (4+1)', rate: 12, multiplier: 1.0, tag: 'Economy Sedan' },
-  ertiga: { name: 'Maruti Ertiga (6+1)', rate: 16, multiplier: 1.25, tag: 'Family SUV' },
-  innova: { name: 'Innova Crysta (7+1)', rate: 22, multiplier: 1.55, tag: 'Luxury Captain' },
-  tempo: { name: 'Tempo Traveller (12+1)', rate: 28, multiplier: 2.1, tag: 'Mini Bus' },
+  sedan: { name: 'Sedan Car (4 Seats)', rate: 12, tag: 'Dzire / Glanza' },
+  mid_suv: { name: 'Mid-Size SUV (5 Seats)', rate: 14, tag: 'Creta / Brezza' },
+  ertiga: { name: 'Maruti Ertiga (6-7 Seats)', rate: 16, tag: 'Family SUV' },
+  carens: { name: 'Kia Carens (6-7 Seats)', rate: 17, tag: 'Smart MPV' },
+  crysta: { name: 'Innova Crysta (7 Seats)', rate: 22, tag: 'Captain Luxury' },
+  hycross: { name: 'Innova Hycross (7 Seats)', rate: 25, tag: 'VIP Hybrid' },
+  fortuner: { name: 'Toyota Fortuner (7 Seats)', rate: 38, tag: '4x4 Luxury SUV' },
+  bmw_audi: { name: 'BMW & Audi (4 Seats)', rate: 55, tag: 'Ultra VIP Sedan' },
+  tempo_9: { name: '9-Seater Tempo Traveller', rate: 24, tag: 'Luxury Van' },
+  tempo_12: { name: '12-Seater Tempo Traveller', rate: 26, tag: 'Executive Van' },
+  tempo_16: { name: '16-Seater Tempo Traveller', rate: 30, tag: 'Force Urbania' },
+  tempo_17: { name: '17-Seater Tempo Traveller', rate: 32, tag: 'Tourist Van' },
+  tempo_20: { name: '20-Seater Tempo Traveller', rate: 35, tag: 'Large Group Van' },
+  bus_24: { name: '24-Seater AC Mini Bus', rate: 42, tag: 'Mini Bus' },
+  bus_28: { name: '28-Seater AC Mini Bus', rate: 46, tag: 'Tour Coach' },
+  bus_36: { name: '36-Seater AC Luxury Bus', rate: 55, tag: 'Grand Coach' },
+  bus_40: { name: '40-Seater AC Deluxe Coach', rate: 60, tag: 'Deluxe Bus' },
+  bus_combo: { name: '20 Seater + 20 Sleeper AC', rate: 65, tag: 'Combo Coach' },
+  bus_sleeper: { name: '36 AC Sleeper Bus', rate: 70, tag: 'Full Sleeper Bus' },
 };
 
 const FareCalculator = ({ onOpenBookingModal }) => {
   const [distanceKm, setDistanceKm] = useState(115);
   const [tripDurationHrs, setTripDurationHrs] = useState(4);
-  const [selectedVehicle, setSelectedVehicle] = useState('innova');
+  const [selectedVehicle, setSelectedVehicle] = useState('crysta');
   const [isRoundTrip, setIsRoundTrip] = useState(false);
 
   const vInfo = vehicleRates[selectedVehicle];
