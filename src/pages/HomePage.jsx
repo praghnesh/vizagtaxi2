@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
 import TourPackages from '../components/TourPackages';
@@ -15,8 +16,21 @@ import BookingModal from '../components/BookingModal';
 import FloatingActions from '../components/FloatingActions';
 
 const HomePage = () => {
+  const location = useLocation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState(null);
+
+  useEffect(() => {
+    if (location.state?.scrollTo) {
+      const targetId = location.state.scrollTo;
+      setTimeout(() => {
+        const el = document.getElementById(targetId);
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location.state]);
 
   const handleOpenBookingModal = (type, data = null) => {
     setModalData(data);

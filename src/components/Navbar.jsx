@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Phone, Calendar, ChevronRight, ChevronDown, MapPin, Compass, Star } from 'lucide-react';
 
 const popularPackagesList = [
@@ -53,6 +53,7 @@ const outstationCities = [
 
 const Navbar = ({ onOpenBookingModal }) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -61,6 +62,15 @@ const Navbar = ({ onOpenBookingModal }) => {
   const hoverTimeoutRef = useRef(null);
 
   useEffect(() => {
+    if (location.pathname === '/tour-packages') {
+      setActiveSection('packages');
+      return;
+    }
+    if (location.pathname === '/hourly-rentals') {
+      setActiveSection('hourly');
+      return;
+    }
+
     const handleScroll = () => {
       if (window.scrollY > 40) {
         setIsScrolled(true);
@@ -84,9 +94,10 @@ const Navbar = ({ onOpenBookingModal }) => {
       }
     };
 
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [location.pathname]);
 
   const handleMouseEnterPackages = () => {
     if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current);
@@ -103,6 +114,40 @@ const Navbar = ({ onOpenBookingModal }) => {
     setIsHoveringPackages(false);
     setMobileMenuOpen(false);
     onOpenBookingModal('tour', { name: `${city} Outstation Tour`, destination: city });
+  };
+
+  const handleNavClick = (e, link) => {
+    e.preventDefault();
+    setMobileMenuOpen(false);
+
+    if (link.id === 'home') {
+      if (location.pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveSection('home');
+      } else {
+        navigate('/');
+      }
+      return;
+    }
+
+    if (link.id === 'packages') {
+      if (location.pathname === '/tour-packages') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/tour-packages');
+      }
+      return;
+    }
+
+    if (location.pathname === '/') {
+      const el = document.getElementById(link.id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+        setActiveSection(link.id);
+      }
+    } else {
+      navigate('/', { state: { scrollTo: link.id } });
+    }
   };
 
   const navLinks = [
@@ -125,7 +170,16 @@ const Navbar = ({ onOpenBookingModal }) => {
       >
         <div className="container mx-auto px-4 md:px-8 flex items-center justify-between">
           
-          <a href="#home" className="flex items-center gap-3 group">
+          <Link
+            to="/"
+            onClick={(e) => {
+              if (location.pathname === '/') {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }
+            }}
+            className="flex items-center gap-3 group cursor-pointer"
+          >
             <div className="relative p-1 rounded-xl bg-white border border-slate-200 shadow-sm group-hover:border-amber-500 transition-all">
               <div className="flex items-center gap-2 px-2.5 py-1 bg-slate-900 rounded-lg">
                 <span className="text-lg md:text-xl font-black tracking-tight text-white font-heading">
@@ -136,7 +190,7 @@ const Navbar = ({ onOpenBookingModal }) => {
                 </span>
               </div>
             </div>
-          </a>
+          </Link>
 
           <nav className="hidden xl:flex items-center gap-1 bg-slate-100/90 p-1.5 rounded-full border border-slate-200 shadow-inner relative">
             {navLinks.map((link) => {
@@ -151,7 +205,8 @@ const Navbar = ({ onOpenBookingModal }) => {
                   >
                     <a
                       href={link.href}
-                      className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-300 flex items-center gap-1 ${
+                      onClick={(e) => handleNavClick(e, link)}
+                      className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-300 flex items-center gap-1 cursor-pointer ${
                         isActive || isHoveringPackages
                           ? 'bg-white text-amber-700 shadow-sm font-extrabold border border-amber-200'
                           : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -221,7 +276,20 @@ const Navbar = ({ onOpenBookingModal }) => {
 
                         <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500 font-medium">
                           <span>Click any package or city for instant taxi booking</span>
-                          <a href="#packages" className="text-amber-600 font-bold hover:underline">View All Packages →</a>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setIsHoveringPackages(false);
+                              if (location.pathname === '/tour-packages') {
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                              } else {
+                                navigate('/tour-packages');
+                              }
+                            }}
+                            className="text-amber-600 font-bold hover:underline cursor-pointer"
+                          >
+                            View All Packages →
+                          </button>
                         </div>
                       </div>
                     )}
@@ -233,7 +301,8 @@ const Navbar = ({ onOpenBookingModal }) => {
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-300 ${
+                  onClick={(e) => handleNavClick(e, link)}
+                  className={`px-3.5 py-1.5 text-xs font-bold rounded-full transition-all duration-300 cursor-pointer ${
                     isActive
                       ? 'bg-white text-amber-700 shadow-sm font-extrabold border border-amber-200'
                       : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
@@ -305,9 +374,19 @@ const Navbar = ({ onOpenBookingModal }) => {
           }`}
         >
           <div className="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
-            <span className="text-xl font-black text-slate-900 font-heading">
+            <Link
+              to="/"
+              onClick={(e) => {
+                setMobileMenuOpen(false);
+                if (location.pathname === '/') {
+                  e.preventDefault();
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+              }}
+              className="text-xl font-black text-slate-900 font-heading cursor-pointer"
+            >
               VIZAG<span className="text-amber-600">TAXI</span>
-            </span>
+            </Link>
             <button
               onClick={() => setMobileMenuOpen(false)}
               className="p-2 text-slate-500 hover:text-slate-900 rounded-lg hover:bg-slate-200"
@@ -400,8 +479,8 @@ const Navbar = ({ onOpenBookingModal }) => {
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-3.5 text-slate-700 hover:text-amber-600 font-bold text-sm rounded-xl hover:bg-amber-50 border border-transparent transition-all"
+                  onClick={(e) => handleNavClick(e, link)}
+                  className="flex items-center justify-between p-3.5 text-slate-700 hover:text-amber-600 font-bold text-sm rounded-xl hover:bg-amber-50 border border-transparent transition-all cursor-pointer"
                 >
                   <span>{link.name}</span>
                   <ChevronRight className="w-4 h-4 text-slate-400" />
