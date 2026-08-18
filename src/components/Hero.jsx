@@ -36,13 +36,12 @@ const Hero = ({ onOpenBookingModal, onOpenHourlyModal }) => {
     e.preventDefault();
     if (activeTab === 'hourly') {
       navigate('/hourly-rentals', { state: hourlyForm });
+    } else if (activeTab === 'outstation') {
+      navigate('/outstation-cabs', { state: outstationForm });
+    } else if (activeTab === 'airport') {
+      navigate('/airport-cabs', { state: airportForm });
     } else {
-      let bookingData = {};
-      if (activeTab === 'outstation') {
-        bookingData = { type: 'Outstation Cab', ...outstationForm };
-      } else {
-        bookingData = { type: 'Airport Transfer', ...airportForm };
-      }
+      const bookingData = { type: 'Cab Booking', ...hourlyForm };
       onOpenBookingModal('form', bookingData);
     }
   };
@@ -432,6 +431,14 @@ const Hero = ({ onOpenBookingModal, onOpenHourlyModal }) => {
                     <span>Reserve Outstation Ride</span>
                     <ChevronRight className="w-4 h-4 text-white" />
                   </button>
+
+                  <button
+                    type="button"
+                    onClick={() => navigate('/outstation-cabs', { state: outstationForm })}
+                    className="w-full py-2.5 bg-sky-50 hover:bg-sky-100 text-sky-800 font-extrabold text-xs rounded-xl border border-sky-300 flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-2xs mt-2"
+                  >
+                    <span>View Outstation Rates, Route Map & Breakdown →</span>
+                  </button>
                 </form>
               )}
 
@@ -501,10 +508,18 @@ const Hero = ({ onOpenBookingModal, onOpenHourlyModal }) => {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-full shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer hover:scale-102 transition-all"
+                    className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-2xl shadow-md mt-2 flex items-center justify-center gap-2 cursor-pointer hover:scale-102 transition-all"
                   >
                     <span>Reserve Airport Taxi</span>
                     <ChevronRight className="w-4 h-4 text-white" />
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => navigate('/airport-cabs', { state: airportForm })}
+                    className="w-full py-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-extrabold text-xs rounded-xl border border-emerald-300 flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-2xs mt-2"
+                  >
+                    <span>View Fixed Airport Rates, Map & 20% Gateway →</span>
                   </button>
                 </form>
               )}

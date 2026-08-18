@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Clock, Car, MapPin, CheckCircle, ShieldCheck, ArrowRight, Info, MessageCircle, Phone, Compass, Fuel, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Clock, Car, MapPin, CheckCircle, ShieldCheck, ArrowRight, Info, MessageCircle, Phone, Compass, Fuel, CheckCircle2, Zap } from 'lucide-react';
 import LivePickupMap from '../components/LivePickupMap';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -293,16 +293,24 @@ const HourlyRentalsPage = ({ onOpenBookingModal }) => {
     ? hourlyFleetTariffs
     : hourlyFleetTariffs.filter((v) => v.category === selectedCategory);
 
-  const handleBooking = (vehicle, fare) => {
+  const handleBooking = (typeOrVehicle, dataOrFare, mode = 'twenty') => {
+    if (typeof typeOrVehicle === 'string') {
+      setModalData(dataOrFare || {});
+      setIsModalOpen(true);
+      return;
+    }
+    const vehicle = typeOrVehicle || {};
+    const fare = dataOrFare;
     const data = {
       type: 'Hourly Rental',
-      vehicle: vehicle.name,
-      package: currentPkg.label,
-      estimatedFare: fare,
-      driverBhatta: vehicle.driverBhatta,
-      extraHr: vehicle.extraHr,
-      extraKm: vehicle.extraKm,
-      pickup: pickupLocation.address,
+      vehicle: vehicle.name || 'Sedan Car',
+      package: currentPkg?.label || '8 Hrs / 80 KM',
+      estimatedFare: fare || 2500,
+      driverBhatta: vehicle.driverBhatta || 250,
+      extraHr: vehicle.extraHr || 200,
+      extraKm: vehicle.extraKm || 14,
+      pickup: pickupLocation?.address || 'Visakhapatnam Railway Station',
+      paymentMode: mode
     };
     if (onOpenBookingModal) {
       onOpenBookingModal('hourly', data);
@@ -313,14 +321,14 @@ const HourlyRentalsPage = ({ onOpenBookingModal }) => {
   };
 
   const constructWhatsAppMsg = (vehicle, fare) => {
-    const text = `Hello Vizag Taxi! I want to book an Hourly Rental Cab.%0A%0A*Package:* ${encodeURIComponent(currentPkg.label)}%0A*Vehicle:* ${encodeURIComponent(vehicle.name)}%0A*Estimated Fare:* ₹${fare}%0A*Pickup Point:* ${encodeURIComponent(pickupLocation.address)}%0A*Extra Hr Rate:* ₹${vehicle.extraHr}/hr%0A*Extra KM Rate:* ₹${vehicle.extraKm}/km%0A*Driver Bhatta:* ₹${vehicle.driverBhatta}/day`;
+    const text = `Hello Vizag Taxi! I want to book an Hourly Rental Cab.%0A%0A*Package:* ${encodeURIComponent(currentPkg?.label || '8 Hrs / 80 KM')}%0A*Vehicle:* ${encodeURIComponent(vehicle?.name || 'Cab')}%0A*Estimated Fare:* ₹${fare}%0A*Pickup Point:* ${encodeURIComponent(pickupLocation?.address || 'Visakhapatnam')}%0A*Extra Hr Rate:* ₹${vehicle?.extraHr || 200}/hr%0A*Extra KM Rate:* ₹${vehicle?.extraKm || 14}/km%0A*Driver Bhatta:* ₹${vehicle?.driverBhatta || 250}/day`;
     return `https://wa.me/919876543210?text=${text}`;
   };
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 selection:bg-amber-500 selection:text-white font-sans antialiased">
       {/* Top Navbar */}
-      <Navbar onOpenBookingModal={onOpenBookingModal || handleBooking} />
+      <Navbar onOpenBookingModal={handleBooking} />
 
       {/* Main Dedicated Page Header */}
       <section className="pt-28 pb-12 bg-slate-900 text-white relative overflow-hidden">
@@ -510,11 +518,11 @@ const HourlyRentalsPage = ({ onOpenBookingModal }) => {
 
                           <button
                             type="button"
-                            onClick={() => handleBooking(vehicle, fare)}
+                            onClick={() => handleBooking(vehicle, fare, 'twenty')}
                             className="btn-gold py-2.5 rounded-xl font-black text-xs flex items-center justify-center gap-1.5 cursor-pointer shadow-xs"
                           >
-                            <span>Book Now</span>
-                            <ArrowRight className="w-4 h-4 text-white" />
+                            <Zap className="w-3.5 h-3.5 fill-slate-950 text-slate-950" />
+                            <span>20% Advance (₹{Math.round((fare || 1500) * 0.20)})</span>
                           </button>
                         </div>
                       ) : null}
@@ -591,7 +599,7 @@ const HourlyRentalsPage = ({ onOpenBookingModal }) => {
       />
 
       {/* Footer */}
-      <Footer onOpenBookingModal={onOpenBookingModal || handleBooking} />
+      <Footer onOpenBookingModal={handleBooking} />
     </div>
   );
 };

@@ -373,6 +373,18 @@ const TourPackagesPage = () => {
               Select your favorite vehicle model with transparent per-vehicle tariffs including Private AC Cab, Mountain Chauffeur, Meals & Hotel Stay options.
             </p>
 
+            {/* Switch to Outstation Cabs link */}
+            <div className="mt-4">
+              <button
+                type="button"
+                onClick={() => navigate('/outstation-cabs')}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 font-bold text-xs border border-emerald-400/40 transition-all cursor-pointer shadow-sm"
+              >
+                <Car className="w-4 h-4 text-emerald-400" />
+                <span>Looking for Direct One-Way Drop or Round Trip? Open Outstation Cabs & Route Map →</span>
+              </button>
+            </div>
+
             {/* Quick Tour Package Switcher Tabs */}
             <div className="flex flex-wrap items-center justify-center gap-2 mt-8">
               {allOfficialTourPackages.map((pkg) => (

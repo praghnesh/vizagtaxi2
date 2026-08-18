@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
-import { Users, Briefcase, Wind, Fuel, ChevronRight, Car, CheckCircle2 } from 'lucide-react';
+import { Users, Briefcase, Wind, Fuel, ChevronRight, Car, CheckCircle2, Clock, Plane, Zap, Compass, ArrowRight } from 'lucide-react';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -277,6 +278,7 @@ const fleetData = [
 ];
 
 const Fleet = ({ onOpenBookingModal }) => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState('All');
 
   const categories = ['All', 'Sedans', 'Family SUVs', 'Luxury Cars', 'Tempo Travellers', 'Buses & Sleepers'];
@@ -324,7 +326,7 @@ const Fleet = ({ onOpenBookingModal }) => {
           ))}
         </div>
 
-        {/* Swiper Slider with 9 vehicles */}
+        {/* Swiper Slider with vehicles */}
         <Swiper
           modules={[Autoplay, Navigation, Pagination]}
           spaceBetween={16}
@@ -397,22 +399,53 @@ const Fleet = ({ onOpenBookingModal }) => {
                     </div>
                   </div>
 
-                  {/* Features */}
-                  <div className="space-y-1">
-                    {vehicle.features.map((feat, idx) => (
-                      <div key={idx} className="flex items-center gap-1.5 text-xs text-slate-700">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                        <span className="truncate">{feat}</span>
-                      </div>
-                    ))}
+                  {/* Quick Service Direct Selection Buttons (Hourly, Outstation, Airport) */}
+                  <div className="space-y-1.5 pt-1">
+                    <span className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">
+                      Choose Service Booking:
+                    </span>
+                    <div className="grid grid-cols-3 gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => navigate('/hourly-rentals', { state: { vehicle: vehicle.name } })}
+                        className="py-1.5 px-1 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-[11px] font-black flex items-center justify-center gap-1 cursor-pointer transition-all shadow-2xs"
+                        title="Book Hourly Rental"
+                      >
+                        <Clock className="w-3.5 h-3.5 text-amber-600 shrink-0" />
+                        <span>Hourly</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => navigate('/outstation-cabs', { state: { vehicle: vehicle.name } })}
+                        className="py-1.5 px-1 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 text-[11px] font-black flex items-center justify-center gap-1 cursor-pointer transition-all shadow-2xs"
+                        title="Book Outstation Cab"
+                      >
+                        <Car className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                        <span>Outstation</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => navigate('/airport-cabs', { state: { vehicle: vehicle.name } })}
+                        className="py-1.5 px-1 rounded-xl bg-sky-50 hover:bg-sky-100 text-sky-900 border border-sky-300 text-[11px] font-black flex items-center justify-center gap-1 cursor-pointer transition-all shadow-2xs"
+                        title="Book Airport Transfer"
+                      >
+                        <Plane className="w-3.5 h-3.5 text-sky-600 shrink-0" />
+                        <span>Airport</span>
+                      </button>
+                    </div>
                   </div>
 
+                  {/* Primary Service Page Button */}
                   <button
-                    onClick={() => onOpenBookingModal('vehicle', vehicle)}
-                    className="btn-cyan w-full py-2.5 text-xs font-black shadow-sm flex items-center justify-center gap-1.5 cursor-pointer mt-1"
+                    type="button"
+                    onClick={() => navigate('/outstation-cabs', { state: { vehicle: vehicle.name } })}
+                    className="btn-gold w-full py-3.5 text-xs font-black shadow-md flex items-center justify-center gap-1.5 cursor-pointer mt-1 hover:scale-[1.02] transition-all"
                   >
-                    <span>Book {vehicle.name}</span>
-                    <ChevronRight className="w-3.5 h-3.5 text-white" />
+                    <Zap className="w-3.5 h-3.5 text-slate-950 fill-slate-950" />
+                    <span>Book {vehicle.name.split(' ')[0]} (Open Booking Desk)</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-slate-950" />
                   </button>
 
                 </div>

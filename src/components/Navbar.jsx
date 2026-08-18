@@ -66,8 +66,28 @@ const Navbar = ({ onOpenBookingModal }) => {
       setActiveSection('packages');
       return;
     }
+    if (location.pathname === '/outstation-cabs') {
+      setActiveSection('outstation');
+      return;
+    }
     if (location.pathname === '/hourly-rentals') {
       setActiveSection('hourly');
+      return;
+    }
+    if (location.pathname === '/airport-cabs') {
+      setActiveSection('airport');
+      return;
+    }
+    if (location.pathname === '/fleet') {
+      setActiveSection('fleet');
+      return;
+    }
+    if (location.pathname === '/why-us') {
+      setActiveSection('why-us');
+      return;
+    }
+    if (location.pathname === '/faq') {
+      setActiveSection('faq');
       return;
     }
 
@@ -113,7 +133,7 @@ const Navbar = ({ onOpenBookingModal }) => {
   const handleSelectCity = (city) => {
     setIsHoveringPackages(false);
     setMobileMenuOpen(false);
-    onOpenBookingModal('tour', { name: `${city} Outstation Tour`, destination: city });
+    navigate('/outstation-cabs', { state: { destination: city, tripType: 'Round Trip' } });
   };
 
   const handleNavClick = (e, link) => {
@@ -139,6 +159,42 @@ const Navbar = ({ onOpenBookingModal }) => {
       return;
     }
 
+    if (link.id === 'outstation') {
+      if (location.pathname === '/outstation-cabs') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/outstation-cabs');
+      }
+      return;
+    }
+
+    if (link.id === 'fleet') {
+      if (location.pathname === '/fleet') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/fleet');
+      }
+      return;
+    }
+
+    if (link.id === 'why-us') {
+      if (location.pathname === '/why-us') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/why-us');
+      }
+      return;
+    }
+
+    if (link.id === 'faq') {
+      if (location.pathname === '/faq') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        navigate('/faq');
+      }
+      return;
+    }
+
     if (location.pathname === '/') {
       const el = document.getElementById(link.id);
       if (el) {
@@ -151,12 +207,12 @@ const Navbar = ({ onOpenBookingModal }) => {
   };
 
   const navLinks = [
-    { name: 'Home', href: '#home', id: 'home' },
-    { name: 'Tour Packages', href: '#packages', id: 'packages', hasDropdown: true },
-    { name: 'Fleet', href: '#fleet', id: 'fleet' },
-    { name: 'Why Us', href: '#why-us', id: 'why-us' },
-    { name: 'Compare', href: '#comparison', id: 'comparison' },
-    { name: 'FAQ', href: '#faq', id: 'faq' },
+    { name: 'Home', href: '/', id: 'home' },
+    { name: 'Outstation Cabs', href: '/outstation-cabs', id: 'outstation' },
+    { name: 'Tour Packages', href: '/tour-packages', id: 'packages', hasDropdown: true },
+    { name: 'Fleet', href: '/fleet', id: 'fleet' },
+    { name: 'Why Us', href: '/why-us', id: 'why-us' },
+    { name: 'FAQ', href: '/faq', id: 'faq' },
   ];
 
   return (

@@ -39,10 +39,31 @@ const FareCalculator = ({ onOpenBookingModal }) => {
   const [isRoundTrip, setIsRoundTrip] = useState(false);
 
   const vInfo = vehicleRates[selectedVehicle];
-  const totalKm = isRoundTrip ? distanceKm * 2 : distanceKm;
-  const baseRateKm = totalKm * vInfo.rate;
-  const driverAllowance = totalKm > 80 ? 400 : 250;
-  const estimatedTotal = Math.round(baseRateKm + driverAllowance);
+  const isHeavy = selectedVehicle.includes('crysta') || selectedVehicle.includes('hycross') || selectedVehicle.includes('fortuner') || selectedVehicle.includes('tempo') || selectedVehicle.includes('bus');
+  const driverAllowance = isHeavy ? 500 : 300;
+
+  let baseFareAmount = 0;
+  let extraKmCount = 0;
+  let extraKmFare = 0;
+  let totalKm = distanceKm;
+
+  if (!isRoundTrip) {
+    baseFareAmount = 5000;
+    if (distanceKm > 50) {
+      extraKmCount = distanceKm - 50;
+      extraKmFare = extraKmCount * vInfo.rate;
+    }
+    totalKm = distanceKm;
+  } else {
+    totalKm = distanceKm * 2;
+    baseFareAmount = Math.max(totalKm, 250) * vInfo.rate;
+    extraKmCount = 0;
+    extraKmFare = 0;
+  }
+
+  const subtotal = !isRoundTrip ? (baseFareAmount + extraKmFare) : baseFareAmount;
+  const gstAmount = Math.round(subtotal * 0.05);
+  const estimatedTotal = subtotal + driverAllowance + gstAmount;
 
   const handleSelectPreset = (route) => {
     setDistanceKm(route.dist);
@@ -244,16 +265,22 @@ const FareCalculator = ({ onOpenBookingModal }) => {
                   <span className="font-mono font-bold text-slate-900">₹{vInfo.rate} / KM</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
-                  <span>Base Distance Fare:</span>
-                  <span className="font-mono font-bold text-sky-700">₹{baseRateKm}</span>
+                  <span>{!isRoundTrip ? (distanceKm <= 50 ? 'Base Fare (≤50 KM):' : 'Base Fare (First 50 KM):') : 'Base Distance Fare:'}</span>
+                  <span className="font-mono font-bold text-sky-700">₹{baseFareAmount}</span>
                 </div>
+                {!isRoundTrip && distanceKm > 50 && (
+                  <div className="flex justify-between text-sky-700">
+                    <span>Extra {extraKmCount} KM (@₹{vInfo.rate}):</span>
+                    <span className="font-mono font-bold">₹{extraKmFare}</span>
+                  </div>
+                )}
                 <div className="flex justify-between text-slate-600">
-                  <span>Driver Allowance & Highway Perks:</span>
+                  <span>Driver Bhatta Allowance:</span>
                   <span className="font-mono font-bold text-amber-700">₹{driverAllowance}</span>
                 </div>
                 <div className="flex justify-between text-slate-600">
-                  <span>GST & Toll Taxes:</span>
-                  <span className="font-mono text-emerald-700 font-bold">Included</span>
+                  <span>GST (5% Tax):</span>
+                  <span className="font-mono text-emerald-700 font-bold">₹{gstAmount}</span>
                 </div>
               </div>
 

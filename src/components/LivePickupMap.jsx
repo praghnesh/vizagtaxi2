@@ -57,6 +57,10 @@ const LivePickupMap = ({ onSelectLocation, initialAddress = '' }) => {
         iconAnchor: [18, 18],
       });
 
+      if (mapContainerRef.current._leaflet_id) {
+        delete mapContainerRef.current._leaflet_id;
+      }
+
       const map = L.map(mapContainerRef.current, {
         center: [currentPos.lat, currentPos.lng],
         zoom: 13,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, ShieldCheck, ArrowUp, Zap } from 'lucide-react';
 
 const Footer = ({ onOpenBookingModal }) => {
@@ -44,23 +45,22 @@ const Footer = ({ onOpenBookingModal }) => {
           {/* Col 2: Quick Links */}
           <div>
             <h4 className="text-sm font-black text-white mb-4 border-l-4 border-amber-400 pl-3 font-heading uppercase tracking-wider">
-              Navigation
+              Services & Pages
             </h4>
             <ul className="space-y-2.5 text-xs font-bold text-slate-400">
               {[
-                { name: 'Home', href: '#home' },
-                { name: 'Route Simulator', href: '#simulator' },
-                { name: 'Live Cabs Radar', href: '#radar' },
-                { name: 'Tour Packages', href: '#packages' },
-                { name: 'Luxury Fleet', href: '#fleet' },
-                { name: 'Why Choose Us', href: '#why-us' },
-                { name: 'Compare Rates', href: '#comparison' },
-                { name: 'FAQ & Support', href: '#faq' },
+                { name: 'Outstation Cabs', href: '/outstation-cabs' },
+                { name: 'Tour Packages', href: '/tour-packages' },
+                { name: 'Hourly Rentals', href: '/hourly-rentals' },
+                { name: 'Airport Transfers', href: '/airport-cabs' },
+                { name: 'Fleet Showroom', href: '/fleet' },
+                { name: 'Why Choose Us', href: '/why-us' },
+                { name: 'FAQ & Support', href: '/faq' },
               ].map((item) => (
                 <li key={item.name}>
-                  <a href={item.href} className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
+                  <Link to={item.href} className="hover:text-amber-400 transition-colors flex items-center gap-1.5">
                     <span className="text-amber-400">›</span> {item.name}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
